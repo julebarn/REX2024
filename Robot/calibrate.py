@@ -7,10 +7,23 @@ import json
 arlo = Robot()
 
 class Agent():
-    def __init__(self, robot, config=None):
+    # Non blocking
+    def __init__(self, robot, config=None: File):
         self.robot = robot
+        self.topspeed = config["topspeed"]
 
-    def move(speed=100, length=1)
+    def move(length_m):
+        pass
+
+    def turn(degrees):
+        pass
+
+    def stop():
+        # Clear queue
+        pass
+
+    def curve(to_point, to_angle):
+        pass
 
 def calibrate_differential(agent=arlo):
     speed = 100
@@ -33,11 +46,45 @@ def calibrate_differential(agent=arlo):
 
     return bias
 
-calibrate_differential()
-
-
 def calibrate_speed(agent=arlo):
+    # returns time to move 1 meter
     speed = 100
     time = 2
+    bias = .5
 
-    for i in range(5):
+    for i in range(4):
+        agent.go_diff(100, 100, 1, 1)
+        sleep(time)
+        agent.stop()
+        if input("Above 1 meter [y/n] ") == "y":
+            time += bias
+        else:
+            time -= bias
+        bias /= 2
+
+
+def calibrate_rotation(agent=arlo):
+    # returns time over degrees regression
+    full_rotation = 1.85
+    offset = 0.2
+
+    agent.go_diff(100,100, 1, 0)
+    sleep(full_rotation)
+    agent.stop()
+
+
+    res = []
+
+    for n in range(2)
+        for i in range(2,5):
+            agent.go_diff(100,100, 1, 0)
+            sleep(full_rotation / i)
+            agent.stop()
+            res.append((i, int(input("Degrees turned?: "))))
+
+    return np.polyfit(*np.array(res).T, 1)
+
+if __name__ == "__main__":
+    bias       = calibrate_differential()
+    speed_time = calibrate_speed()
+    calibrate_rotation()
