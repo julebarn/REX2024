@@ -12,7 +12,7 @@ arlo = Robot()
 arlo.reset_encoder_counts()
 def t90(arlo):
     arlo.go_diff(lturn,rturn,1,0)
-    sleep(0.8281080)
+    sleep(0.783)
     arlo.stop()
     sleep(2)
 
@@ -31,6 +31,6 @@ def sq(arlo):
     line(arlo)
     t90(arlo)
 
-for i in range(4):
+for i in range(4*5):
     t90(arlo)
 
