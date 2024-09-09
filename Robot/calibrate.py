@@ -8,7 +8,7 @@ arlo = Robot()
 
 class Agent():
     # Non blocking
-    def __init__(self, robot, config=None: File):
+    def __init__(self, robot, config=None):
         self.robot = robot
         self.topspeed = config["topspeed"]
 
@@ -75,7 +75,7 @@ def calibrate_rotation(agent=arlo):
 
     res = []
 
-    for n in range(2)
+    for n in range(2):
         for i in range(2,5):
             agent.go_diff(100,100, 1, 0)
             sleep(full_rotation / i)
@@ -85,6 +85,7 @@ def calibrate_rotation(agent=arlo):
     return np.polyfit(*np.array(res).T, 1)
 
 if __name__ == "__main__":
-    bias       = calibrate_differential()
-    speed_time = calibrate_speed()
-    calibrate_rotation()
+    bias       = calibrate_differential(arlo)
+    print(bias)
+    #speed_time = calibrate_speed()
+    #calibrate_rotation()
