@@ -20,6 +20,11 @@ def line(arlo,dist):
     arlo.stop()
     sleep(1)
 
-    
-while (arlo.read_sensor(0) >200):
-    line(arlo,0.2)
+arlo.go_diff(lspeed,rspeed,1,1)
+
+i=0
+while i<1:
+    if(arlo.read_sensor(0) <200):
+        arlo.stop()
+        i+1
+
