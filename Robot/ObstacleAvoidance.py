@@ -26,6 +26,7 @@ def t90r(arlo):
     sleep(0.79)
     arlo.stop()
     sleep(2)
+    arlo.go_diff(lspeed,rspeed,1,1)
 
 def t90l(arlo):
     arlo.stop()
@@ -33,6 +34,7 @@ def t90l(arlo):
     sleep(0.79)
     arlo.stop()
     sleep(2)
+    arlo.go_diff(lspeed,rspeed,1,1)
 
 arlo.go_diff(lspeed,rspeed,1,1)
 
