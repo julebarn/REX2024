@@ -28,3 +28,4 @@ while i<1:
         arlo.stop()
         i+1
 
+print(arlo.read_sensor(0))
