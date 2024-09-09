@@ -21,5 +21,5 @@ def line(arlo,dist):
     sleep(1)
 
     
-while (arlo.read_sensor(0) >20):
+while (arlo.read_sensor(0) >200):
     line(arlo,0.2)
