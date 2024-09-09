@@ -43,13 +43,13 @@ state = 0
 while i<1:
     if(state == 0):
         if(arlo.read_sensor(0)<200):
-            if(arlo.read_sensor(3) > 200):
+            if(arlo.read_sensor(3) > 1000):
                 t90r(arlo)
                 state = 1
-            elif (arlo.read_sensor(2) > 200):
+            elif (arlo.read_sensor(2) > 1000):
                 t90l(arlo)
                 state = 3
-            elif (arlo.read_sensor(1) >200):
+            elif (arlo.read_sensor(1) >1000):
                 t90r(arlo)
                 t90r(arlo)
 
