@@ -56,17 +56,14 @@ while i<1:
     #             t90r(arlo)
 
     if arlo.read_sensor(0) < 300 and arlo.read_sensor(2)<300 and arlo.read_sensor(3)<300 :
-        arlo.go_diff(lspeed,rspeed,0,0) 
-        
-    if(arlo.read_sensor(0)<300):
+        arlo.go_diff(lspeed,rspeed,0,0)   
+    elif(arlo.read_sensor(0)<300):
         tr(arlo)
         arlo.go_diff(lspeed,rspeed,1,1)
-    
-    if(arlo.read_sensor(2)<300):
+    elif(arlo.read_sensor(2)<300):
         tr(arlo)
         arlo.go_diff(lspeed,rspeed,1,1)
-    
-    if(arlo.read_sensor(3)<300):
+    elif(arlo.read_sensor(3)<300):
         tl(arlo)
         arlo.go_diff(lspeed,rspeed,1,1)
 
