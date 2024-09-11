@@ -4,11 +4,10 @@ import numpy as np
 
 arlo = Robot()
 
-# 10-300
 distances = [100,500,1000,1500,2000,2500,3000]
 
 measurments = [0,0,0,0,0,0,0]
-normalized = np.array()
+normalized = [0,0,0,0,0,0,0]
 
 i = 0
 while i < len(distances):
@@ -23,4 +22,5 @@ print(measurments)
 for i in range (len(distances)):
     normalized[i] = distances[i]-measurments[i]
 
-print(np.std(normalized))
+npnorm = np.array(normalized)
+print(np.std(npnorm))
