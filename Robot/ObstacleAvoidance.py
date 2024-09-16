@@ -20,40 +20,57 @@ def line(arlo,dist):
     arlo.stop()
     sleep(1)
 
-def t90r(arlo):
+def tr(arlo):
     arlo.stop()
+    arlo.go_diff(lturn,rturn,1,0)
+    sleep(0.3)
+
+
+def tl(arlo):
+    arlo.stop()
+    arlo.go_diff(lturn,rturn,0,1)
+    sleep(0.3)
+
+def t90(arlo):
     arlo.go_diff(lturn,rturn,1,0)
     sleep(0.79)
     arlo.stop()
     sleep(2)
-    arlo.go_diff(lspeed,rspeed,1,1)
 
-def t90l(arlo):
-    arlo.stop()
-    arlo.go_diff(lturn,rturn,0,1)
-    sleep(0.79)
-    arlo.stop()
-    sleep(2)
-    arlo.go_diff(lspeed,rspeed,1,1)
 
 arlo.go_diff(lspeed,rspeed,1,1)
 
 i=0
 state = 0
 while i<1:
-    if(state == 0):
-        if(arlo.read_sensor(0)<200):
-            if(arlo.read_sensor(3) > 1000):
-                t90r(arlo)
-                state = 1
-            elif (arlo.read_sensor(2) > 1000):
-                t90l(arlo)
-                state = 3
-            elif (arlo.read_sensor(1) >1000):
-                t90r(arlo)
-                t90r(arlo)
+    # if(state == 0):
+    #     if(arlo.read_sensor(0)<200):
+    #         if(arlo.read_sensor(3) > 1000):
+    #             t90r(arlo)
+    #             state = 1
+    #         elif (arlo.read_sensor(2) > 1000):
+    #             t90l(arlo)
+    #             state = 3
+    #         elif (arlo.read_sensor(1) >1000):
+    #             t90r(arlo)
+    #             t90r(arlo)
 
-        i+1
+    if arlo.read_sensor(0) < 300 and arlo.read_sensor(2)<300 and arlo.read_sensor(3)<300 :
+        arlo.go_diff(lspeed,rspeed,0,0)   
+    elif(arlo.read_sensor(0)<300):
+        tr(arlo)
+        arlo.go_diff(lspeed,rspeed,1,1)
+    elif(arlo.read_sensor(2)<300):
+        tr(arlo)
+        arlo.go_diff(lspeed,rspeed,1,1)
+    elif(arlo.read_sensor(3)<300):
+        tl(arlo)
+        arlo.go_diff(lspeed,rspeed,1,1)
+
+
+
+
+    i+1
 print(arlo.read_sensor(0))
 
 arlo.stop()
