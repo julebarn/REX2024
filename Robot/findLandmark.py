@@ -9,7 +9,7 @@ except ImportError:
     exit(-1)
 
 
-aruco_dict = cv2.aruco.Dictionary_get(aruco.DICT_6X6_250)
+aruco_dict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_6X6_250)
 parameters = cv2.aruco.DetectorParameters_create()
 
 bias = -0.043750000000000004
