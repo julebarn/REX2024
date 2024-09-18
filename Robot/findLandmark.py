@@ -1,6 +1,8 @@
 import cv2
 import numpy
 from robot import Robot 
+from functools import partial
+import time
 try:
     from picamera2 import Picamera2, Preview
     print("Camera.py: Using picamera2 module")
@@ -18,41 +20,55 @@ speed = 100
 def goLine():
     arlo.go_diff(speed * (1+bias),speed * (1-bias), 1, 1)
 
-def rotateUntil(pred):
-    arlo.go_diff(speed * (1+bias), speed * (1-bias), 0, 1)
+def rotateUntil(pred, max_i=1000, agent=None):
+    v = .34
 
-    while not pred():
-        sleep(0.01)
 
-    arlo.stop()
+    go = not True
+    while not go:
+        agent.go_diff(v*speed * (1+bias), v*speed * (1-bias), 0, 1)
+        time.sleep(0.5)
+        agent.stop()
+        time.sleep(0.1)
+        go = pred()
 
-def foundLandmark():
+    agent.stop()
+
+def foundLandmark(cam=None):
     img = cam.capture_array()
     img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
     _, ids, _ = cv2.aruco.detectMarkers(img, aruco_dict, parameters=parameters)
-
-    return ids
+    print(ids)
+    return ids != None
 
 def main():
+    print("main")
     arlo = Robot()
     
     cam = Picamera2()
     camera_config = cam.create_preview_configuration()
     cam.configure(camera_config)
+    cam.start_preview(Preview.QTGL)
     cam.start()
     
+    print("Out")
+    img = cam.capture_array()
+    img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+    cv2.imshow('Detected Markers', img)
+
+    rotateUntil(partial(foundLandmark, cam), agent=arlo)
 
     while True:
+        print("while")
         img = cam.capture_array()
         img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
     
         corners, ids, rejectedImgPoints = cv2.aruco.detectMarkers(img, aruco_dict, parameters=parameters)
 
         if ids is not None:
-            cv2.aruco.drawDetectedMarkers(img, corners, ids)
-            cv2.imshow('Detected Markers', img)
-            cv2.waitKey(0)
-            cv2.destroyAllWindows()
+            print(len(ids))
+        
+        time.sleep(0.4)        
 
 if __name__ == "__main__":
     main()
