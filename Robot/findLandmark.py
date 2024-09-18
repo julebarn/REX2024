@@ -8,13 +8,13 @@ except ImportError:
     print("Camera.py: picamera2 module not available")
     exit(-1)
 
+
+aruco_dict = aruco.Dictionary_get(aruco.DICT_6X6_250)
+parameters = aruco.DetectorParameters_create()
+
 bias = -0.043750000000000004
 speed = 100
 
-def make_detector():
-        aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250)
-        parameters = cv2.aruco.DetectorParameters()
-        return cv2.aruco.ArucoDetector(aruco_dict, parameters)
 
 
 def goLine():
@@ -30,14 +30,12 @@ def main():
     cam.configure(camera_config)
     cam.start()
     
-    Detector = make_detector()
 
     while True:
         img = cam.capture_array()
         img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
         
-        corners, ids, rejected = Detector.detectMarkers(img)
-
+        corners, ids, rejectedImgPoints = aruco.detectMarkers(image, aruco_dict, parameters=parameters)
         if ids is not None:
             cv2.aruco.drawDetectedMarkers(image, corners, ids)
             cv2.imshow('Detected Markers', image)
