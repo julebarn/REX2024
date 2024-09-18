@@ -11,6 +11,13 @@ except ImportError:
 bias = -0.043750000000000004
 speed = 100
 
+def make_detector():
+        aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250)
+        parameters = cv2.aruco.DetectorParameters()
+        return cv2.aruco.ArucoDetector(aruco_dict, parameters)
+
+Detector = make_detector()
+
 def goLine():
     arlo.go_diff(speed * (1+bias),speed * (1-bias), 1, 1)
 
@@ -22,14 +29,13 @@ def main():
     cam = Picamera2()
     camera_config = cam.create_preview_configuration()
     cam.configure(camera_config)
-    cam.start_preview(Preview.QTGL)
     cam.start()
 
     while True:
         img = cam.capture_array()
         img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
         
-        corners, ids, rejected = cv2.aruco.detectMarkers(img)
+        corners, ids, rejected = Detector.detectMarkers(img)
 
         if ids is not None:
             cv2.aruco.drawDetectedMarkers(image, corners, ids)
