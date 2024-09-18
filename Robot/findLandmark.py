@@ -35,7 +35,7 @@ def main():
         img = cam.capture_array()
         img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
         
-        corners, ids, rejectedImgPoints = cv2.aruco.detectMarkers(image, aruco_dict, parameters=parameters)
+        corners, ids, rejectedImgPoints = cv2.aruco.detectMarkers(img, aruco_dict, parameters=parameters)
 
         if ids is not None:
             cv2.aruco.drawDetectedMarkers(img, corners, ids)
