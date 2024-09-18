@@ -9,8 +9,8 @@ except ImportError:
     exit(-1)
 
 
-aruco_dict = aruco.Dictionary_get(aruco.DICT_6X6_250)
-parameters = aruco.DetectorParameters_create()
+aruco_dict = cv2.aruco.Dictionary_get(aruco.DICT_6X6_250)
+parameters = cv2.aruco.DetectorParameters_create()
 
 bias = -0.043750000000000004
 speed = 100
@@ -34,7 +34,7 @@ def main():
     while True:
         img = cam.capture_array()
         img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
-        
+        cv2.
         corners, ids, rejectedImgPoints = cv2.aruco.detectMarkers(img, aruco_dict, parameters=parameters)
 
         if ids is not None:
