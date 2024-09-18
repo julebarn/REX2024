@@ -25,15 +25,22 @@ def main():
     cam.start_preview(Preview.QTGL)
     cam.start()
 
-
-    img = cam.capture_array()
-    img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+    while True:
+        img = cam.capture_array()
+        img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
         
-    cv2.imshow("Image", img)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+        corners, ids, rejected = cv2.aruco.detectMarkers(img)
 
-        #cv2.aruco.detectMarkers(image, aruco_dict, parameters=parameters)
+        if ids is not None:
+            cv2.aruco.drawDetectedMarkers(image, corners, ids)
+            cv2.imshow('Detected Markers', image)
+            cv2.waitKey(0)
+            cv2.destroyAllWindows()
+
+       
+ 
+
+        
 
 
 
