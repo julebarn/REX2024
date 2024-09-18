@@ -1,6 +1,12 @@
 import cv2
 import numpy
-
+from robot import Robot 
+try:
+    from picamera2 import Picamera2, Preview
+    print("Camera.py: Using picamera2 module")
+except ImportError:
+    print("Camera.py: picamera2 module not available")
+    exit(-1)
 
 bias = -0.043750000000000004
 speed = 100
