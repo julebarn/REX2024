@@ -16,7 +16,6 @@ def make_detector():
         parameters = cv2.aruco.DetectorParameters()
         return cv2.aruco.ArucoDetector(aruco_dict, parameters)
 
-Detector = make_detector()
 
 def goLine():
     arlo.go_diff(speed * (1+bias),speed * (1-bias), 1, 1)
@@ -30,6 +29,8 @@ def main():
     camera_config = cam.create_preview_configuration()
     cam.configure(camera_config)
     cam.start()
+    
+    Detector = make_detector()
 
     while True:
         img = cam.capture_array()
