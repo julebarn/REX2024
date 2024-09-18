@@ -42,14 +42,6 @@ def foundLandmark(cam=None):
     print(ids)
     return ids != None
 
-def turnAndGo(arlo,cam):
-    rotateUntil(partial(foundLandmark, cam), agent=arlo, d=False)
-    while partial(foundLandmark, cam):
-        arlo.go_diff(speed * (1+bias),speed * (1-bias), 1, 1)
-        time.sleep(0.1)
-        arlo.stop()
-
-
 def main():
     print("main")
     arlo = Robot()
@@ -64,14 +56,12 @@ def main():
     img = cam.capture_array()
     img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
     cv2.imshow('Detected Markers', img)
-   
-    turnAndGo(arlo,cam)
-    turnAndGo(arlo,cam)
 
-
-
-
-    
+    rotateUntil(partial(foundLandmark, cam), agent=arlo, d=False)
+    while partial(foundLandmark, cam):
+        arlo.go_diff(speed * (1+bias),speed * (1-bias), 1, 1)
+        time.sleep(0.2)
+        arlo.stop()
     
 if __name__ == "__main__":
     main()
