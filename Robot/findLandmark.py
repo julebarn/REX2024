@@ -15,12 +15,23 @@ parameters = cv2.aruco.DetectorParameters_create()
 bias = -0.043750000000000004
 speed = 100
 
-
-
 def goLine():
     arlo.go_diff(speed * (1+bias),speed * (1-bias), 1, 1)
 
+def rotateUntil(pred):
+    arlo.go_diff(speed * (1+bias), speed * (1-bias), 0, 1)
 
+    while not pred():
+        sleep(0.01)
+
+    arlo.stop()
+
+def foundLandmark():
+    img = cam.capture_array()
+    img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+    _, ids, _ = cv2.aruco.detectMarkers(img, aruco_dict, parameters=parameters)
+
+    return ids
 
 def main():
     arlo = Robot()
@@ -42,16 +53,6 @@ def main():
             cv2.imshow('Detected Markers', img)
             cv2.waitKey(0)
             cv2.destroyAllWindows()
-
-       
- 
-
-        
-
-
-
-
-
 
 if __name__ == "__main__":
     main()
