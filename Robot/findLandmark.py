@@ -48,9 +48,9 @@ def main():
     
     cam = Picamera2()
     cam.video_configuration.controls.FrameRate = 5.0
-    camera_config = cam.create_preview_configuration()
-    cam.configure(camera_config)
-    cam.start_preview(Preview.QTGL)
+    # camera_config = cam.create_preview_configuration()
+    # cam.configure(camera_config)
+    # cam.start_preview(Preview.QTGL)
     cam.start()
     
     print("Out")
