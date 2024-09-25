@@ -3,6 +3,7 @@
 from robot import Robot
 from time import sleep
 import json
+import numpy as np
 
 arlo = Robot()
 
@@ -49,35 +50,37 @@ def calibrate_differential(agent=arlo):
 def calibrate_speed(agent=arlo):
     # returns time to move 1 meter
     speed = 100
-    time = 2
-    bias = .5
+    time = 1.5
+    bias = 1.5
 
     for i in range(4):
+        print(f"{time=}")
         agent.go_diff(100, 100, 1, 1)
         sleep(time)
         agent.stop()
         if input("Above 1 meter [y/n] ") == "y":
-            time += bias
-        else:
             time -= bias
+        else:
+            time += bias
         bias /= 2
+
+    return time
 
 
 def calibrate_rotation(agent=arlo):
     # returns time over degrees regression
-    full_rotation = 1.85
+    full_rotation = .85
     offset = 0.2
 
-    agent.go_diff(100,100, 1, 0)
-    sleep(full_rotation)
-    agent.stop()
-
+    # agent.go_diff(100,100, 1, 0)
+    # sleep(full_rotation)
+    # agent.stop()
 
     res = []
 
     for n in range(2):
         for i in range(2,5):
-            agent.go_diff(100,100, 1, 0)
+            agent.go_diff(60, 60, 1, 0)
             sleep(full_rotation / i)
             agent.stop()
             res.append((i, int(input("Degrees turned?: "))))

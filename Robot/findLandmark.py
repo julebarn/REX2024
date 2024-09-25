@@ -30,7 +30,7 @@ def rotateUntil(pred, max_i=1000, agent=None, clockwise=False):
                 1 if clockwise else 0)
         time.sleep(0.2)
         agent.stop()
-        time.sleep(0.05)
+        time.sleep(0.15)
         go = pred()
 
     agent.stop()
