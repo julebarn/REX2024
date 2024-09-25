@@ -1,5 +1,5 @@
 import cv2
-import numpy
+import numpy as np
 from robot import Robot 
 from functools import partial
 import time
@@ -21,7 +21,7 @@ speed = 100
 def goLine():
     arlo.go_diff(speed * (1+bias),speed * (1-bias), 1, 1)
 
-def rotateUntil(pred, max_i=1000, agent=None, clockwise=False):
+def rotateUntil(pred, agent=None, clockwise=False):
     v = .34
 
     go = False
@@ -29,7 +29,7 @@ def rotateUntil(pred, max_i=1000, agent=None, clockwise=False):
         agent.go_diff(v*speed * (1+bias), v*speed * (1-bias), 
                 0 if clockwise else 1,
                 1 if clockwise else 0)
-        time.sleep(0.2)
+        time.sleep(0.05)
         agent.stop()
         time.sleep(0.15)
         go = pred()
@@ -40,8 +40,17 @@ def foundLandmark(cam=None):
     img = cam.capture_array()
     img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
     _, ids, _ = cv2.aruco.detectMarkers(img, aruco_dict, parameters=parameters)
-    print(ids)
+
     return ids != None
+
+def cameraMatrix(focal_length, center=(320,240)):
+    f = focal_length
+    cx, cy = center
+    return np.array([
+        [f, 0, cx],
+        [0, f, cy],
+        [0, 0, 1 ]
+    ])
 
 try:
     arlo
@@ -56,7 +65,12 @@ except NameError:
 
 rotateUntil(partial(foundLandmark, cam), agent=arlo, clockwise=False)
 
-#while partial(foundLandmark, cam):
-#    arlo.go_diff(speed * (1+bias),speed * (1-bias), 1, 1)
-#    time.sleep(0.2)
-#    arlo.stop()
+img = cam.capture_array()
+img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+corners, ids, _ = cv2.aruco.detectMarkers(img, aruco_dict, parameters=parameters)
+
+cmat = cameraMatrix(1273) # TODO calibrate
+dcof = np.array([0,0,0,0])
+
+rvecs, tvecs, _ = cv2.aruco.estimatePoseSingleMarkers(corners, .145, cmat, dcof)
+print(rvecs, tvecs)
