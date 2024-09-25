@@ -29,9 +29,9 @@ def rotateUntil(pred, agent=None, clockwise=False):
         agent.go_diff(v*speed * (1+bias), v*speed * (1-bias), 
                 0 if clockwise else 1,
                 1 if clockwise else 0)
-        time.sleep(0.05)
+        time.sleep(0.1)
         agent.stop()
-        time.sleep(0.15)
+        time.sleep(0.2)
         go = pred()
 
     agent.stop()
