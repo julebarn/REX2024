@@ -76,5 +76,5 @@ rvecs, tvecs, _ = cv2.aruco.estimatePoseSingleMarkers(corners, .145, cmat, dcof)
 print(rvecs, tvecs)
 
 goLine()
-time.sleep(0.5625) # go to target -20 cm
+time.sleep(tvecs[0][0][2]*1.5 - 0.3) # go to target -20 cm
 arlo.stop()
