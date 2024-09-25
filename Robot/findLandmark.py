@@ -56,7 +56,7 @@ def main():
     print("Out")
     img = cam.capture_array()
     img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
-    cv2.imshow('Detected Markers', img)
+    # cv2.imshow('Detected Markers', img)
 
     rotateUntil(partial(foundLandmark, cam), agent=arlo, clockwise=False)
     while partial(foundLandmark, cam):
