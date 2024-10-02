@@ -49,4 +49,4 @@ def getCenter(rvec, tvec):
 
 centers = [(i, getCenter(r,t)) for i,r,t in zip(ids, rvecs, tvecs)]
 
-print([np.linalg.norm(x) for (_, x) in centers])
+print(centers)
