@@ -87,11 +87,7 @@ def calibrate_rotation(agent=arlo):
 
     return np.polyfit(*np.array(res).T, 1)
 
-# if __name__ == "__main__":
-#     bias       = calibrate_differential(arlo)
-#     print(bias)
-#     #speed_time = calibrate_speed()
-#     #calibrate_rotation()
-
-
-print(calibrate_speed())
+if __name__ == "__main__":
+    #bias       = calibrate_differential(arlo)
+    print(calibrate_speed())
+    #calibrate_rotation()
