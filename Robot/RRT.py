@@ -110,7 +110,7 @@ class RRT:
                 # check if new_node is within an obstacle, and if 
                 # the path between it and its nearest node is obstacle free
                 self.nodes.append(new_node) # if all conditions satisfied, add the new node, with its parent being nearest node
-                self.plot_step(new_node)  # Update plot in real time (only for visual effect hehe)
+                # self.plot_step(new_node)  # Update plot in real time (only for visual effect hehe)
                 
                 if self.distance(new_node, self.goal) < self.step_size: #check if the new node is at the goal
                     final_node = Node(self.goal.x, self.goal.y)
