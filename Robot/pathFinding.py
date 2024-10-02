@@ -97,7 +97,7 @@ def rotateDeg(deg, speed=60, clockwise=False):
     arlo.go_diff(speed * (1+bias),speed * (1-bias), 
                 0 if clockwise else 1,
                 1 if clockwise else 0)
-    time.sleep(calibration["rotation_speed"]*deg)
+    time.sleep(calibration["rotation_speed"]/deg)
     arlo.stop()
 
 for _, turn, dist in accumulate(path, movement, initial=((0,0),0,0)):
