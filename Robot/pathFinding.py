@@ -84,11 +84,13 @@ rrt = RRT(start, goal, map_size, obstacles, step_size=1, max_iter=1000)
 path = rrt.find_path()
 
 def goLine(dist):
+    print("Going", dist, "meters")
     arlo.go_diff(speed * (1+bias),speed * (1-bias), 1, 1)
     time.sleep(calibration["speed"]*dist)
     arlo.stop()
 
 def rotateDeg(deg, speed=60, clockwise=False):
+    print("Rotating", deg, "degrees")
     if deg < 5:
         return
     
