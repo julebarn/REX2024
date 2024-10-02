@@ -47,6 +47,6 @@ def getCenter(rvec, tvec):
     point_camera_coords = np.dot(rotation_matrix, point_marker_coords) + tvec
     return point_camera_coords
 
-centers = [getCenter(r,t)[[0,1]] for r,t in zip(rvecs, tvecs)]
+centers = [getCenter(r,t)[0][[0,2]] for r,t in zip(rvecs, tvecs)]
 
 print(centers)
