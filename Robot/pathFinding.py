@@ -8,12 +8,16 @@ from calibration import calibration
 from picamera2 import Picamera2, Preview
 from itertools import accumulate
 from RRT import *
+from calibration import calibration
+
+
 
 aruco_dict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_6X6_250)
 parameters = cv2.aruco.DetectorParameters_create()
 
 bias  = calibration["bias"]
 speed = 100
+
 def movement(prev_state, p):
     prev, angle, d = prev_state
     return (p,
@@ -75,5 +79,22 @@ rrt = RRT(start, goal, map_size, obstacles, step_size=1, max_iter=1000)
 
 path = rrt.find_path()
 
+def goLine(dist):
+    arlo.go_diff(speed * (1+bias),speed * (1-bias), 1, 1)
+    time.sleep(calibration["speed"]*dist)
+    arlo.stop()
+
+def rotateDeg(deg, speed=60, clockwise=False):
+    arlo.go_diff(speed * (1+bias),speed * (1-bias), 
+                0 if clockwise else 1,
+                1 if clockwise else 0)
+    time.sleep(calibration["rotation_speed"]*deg)
+    arlo.stop()
+
 for _, turn, dist in accumulate(path, movement, initial=((0,0),0,0)):
-    
+    rotateDeg(turn)
+    goLine(dist)
+
+
+
+
