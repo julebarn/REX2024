@@ -60,7 +60,7 @@ for centre in centers:
 
 
 start = (0, 0)
-goal = (9, 9)
+goal = (1, 4)
 map_size = (10, 10)
 rrt = RRT(start, goal, map_size, obstacles, step_size=1, max_iter=1000)
 
