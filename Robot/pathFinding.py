@@ -1,10 +1,12 @@
 import cv2
+import math
 import numpy as np
 from robot import Robot 
 from functools import partial
 import time
 from calibration import calibration
 from picamera2 import Picamera2, Preview
+from itertools import accumulate
 from RRT import *
 
 aruco_dict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_6X6_250)
@@ -12,6 +14,12 @@ parameters = cv2.aruco.DetectorParameters_create()
 
 bias  = calibration["bias"]
 speed = 100
+def movement(prev_state, p):
+    prev, angle, d = prev_state
+    return (p,
+            math.degrees(math.atan((prev[0]-p[0])/(prev[1]-p[1]))) - angle,
+            math.dist(prev, p))
+
 
 def cameraMatrix(focal_length, center=(320,240)):
     f = focal_length
@@ -65,7 +73,7 @@ map_size = (10, 10)
 rrt = RRT(start, goal, map_size, obstacles, step_size=1, max_iter=1000)
 
 
-# Run the RRT algorithm
 path = rrt.find_path()
-print(path)
-# Plot the final path if found
+
+for _, turn, dist in accumulate(path, movement, initial=((0,0),0,0)):
+    
