@@ -161,17 +161,5 @@ class RRT:
 
         plt.show()
 
-start = (0, 0)
-goal = (9, 9)
-map_size = (10, 10)
-obstacles = [(1, 2, 0.5), (4, 4, 0.7)] #increase the radius of the obstacles by arlo's radius
-rrt = RRT(start, goal, map_size, obstacles, step_size=1, max_iter=1000)
 
-rrt.plot_initial()
-
-# Run the RRT algorithm
-path = rrt.find_path()
-print(path)
-# Plot the final path if found
-rrt.plot_final(path)
 
