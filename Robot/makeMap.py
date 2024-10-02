@@ -49,4 +49,13 @@ def getCenter(rvec, tvec):
 
 centers = [getCenter(r,t)[0][[0,2]] for r,t in zip(rvecs, tvecs)]
 
-print(centers)
+# [array([0.24546187, 1.6224191 ]), array([-0.16363691,  1.42022181])]
+# [ (x,z,r) ,...]
+rad = 0.14
+obstacles = []
+for centre in centers:
+    tuple = (centre[0],centre[1],rad)
+    obstacles.append(tuple)
+
+
+print(obstacles)
