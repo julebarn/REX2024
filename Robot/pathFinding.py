@@ -20,6 +20,10 @@ speed = 100
 
 def movement(prev_state, p):
     prev, angle, d = prev_state
+    if (prev[1]-p[1]) == 0:
+        return (p,
+            math.degrees(math.atan((prev[0]-p[0])/0.0001)) - angle,
+            math.dist(prev, p))
     return (p,
             math.degrees(math.atan((prev[0]-p[0])/(prev[1]-p[1]))) - angle,
             math.dist(prev, p))
