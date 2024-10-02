@@ -89,6 +89,9 @@ def goLine(dist):
     arlo.stop()
 
 def rotateDeg(deg, speed=60, clockwise=False):
+    if deg < 5:
+        return
+    
     arlo.go_diff(speed * (1+bias),speed * (1-bias), 
                 0 if clockwise else 1,
                 1 if clockwise else 0)
