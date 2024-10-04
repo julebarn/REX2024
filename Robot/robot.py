@@ -48,9 +48,11 @@ class Robot(object):
         
     def send_command(self, cmd, sleep_ms=0.0):
         """Sends a command to the Arduino robot controller"""
+        print("serial w: ", cmd)
         self.serialRead.write(cmd.encode('ascii'))
         sleep(sleep_ms)
         str_val=self.serialRead.readline()
+        print("serial r: ", str_val)
         return str_val
 
 

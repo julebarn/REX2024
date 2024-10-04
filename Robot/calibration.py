@@ -4,6 +4,6 @@ calibration = {
     "bias": -0.03125000000000001,
     # 100 * (1+bias),100 * (1-bias)
     # Straight line at 100
-    "speed": 0.5625
+    "speed": 1.5
     # seconds/meter
 }

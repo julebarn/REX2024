@@ -76,21 +76,24 @@ for centre in centers:
 
 
 start = (0, 0)
-goal = (1, 4)
-map_size = (10, 10)
-rrt = RRT(start, goal, map_size, obstacles, step_size=1, max_iter=1000)
+goal = (0, 1.8)
+map_size = (1.8, 3)
 
+rrt = RRT(start, goal, map_size, obstacles, step_size=0.5, max_iter=1000)
 
+rrt.plot_initial()
 path = rrt.find_path()
+rrt.plot_final(path)
 
 def goLine(dist):
     print("Going", dist, "meters")
     arlo.go_diff(speed * (1+bias),speed * (1-bias), 1, 1)
     time.sleep(calibration["speed"]*dist)
     arlo.stop()
+    time.sleep(0.5)
 
 def rotateDeg(deg, speed=60, clockwise=False):
-    print("Rotating", deg, "degrees")
+    print("Rotating", deg, "degrees", ("clockwise" if clockwise else "countercloskwise"))
     if deg < 5:
         return
     
@@ -99,9 +102,14 @@ def rotateDeg(deg, speed=60, clockwise=False):
                 1 if clockwise else 0)
     time.sleep(deg/calibration["rotation_speed"])
     arlo.stop()
+    time.sleep(0.5)
 
 for _, turn, dist in accumulate(path, movement, initial=((0,0),0,0)):
-    rotateDeg(turn)
+    clockwise = False
+    if turn<0:
+        clockwise = True
+        turn = -turn 
+    rotateDeg(turn,60,clockwise)
     goLine(dist)
 
 
