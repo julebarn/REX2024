@@ -66,8 +66,7 @@ def getCenter(rvec, tvec):
 
 centers = [getCenter(r,t)[0][[0,2]] for r,t in zip(rvecs, tvecs)]
 
-# [array([0.24546187, 1.6224191 ]), array([-0.16363691,  1.42022181])]
-# [ (x,z,r) ,...]
+
 rad = 0.14
 obstacles = []
 for centre in centers:
@@ -79,11 +78,19 @@ start = (0, 0)
 goal = (0, 1.8)
 map_size = (1.8, 3)
 
-rrt = RRT(start, goal, map_size, obstacles, step_size=0.5, max_iter=1000)
+#rrt = RRT(start, goal, map_size, obstacles, step_size=0.5, max_iter=1000)
 
-rrt.plot_initial()
-path = rrt.find_path()
-rrt.plot_final(path)
+#rrt.plot_initial()
+#path = rrt.find_path()
+#rrt.plot_final(path)
+path = [[0, 0]
+[0.27558484319520465, 0.41719658939290777]
+[0.7364580606932789, 0.611093153036962]
+[0.7549048590666272, 1.1107527527944099]
+[0.957324827579686, 1.567946537033842]
+[0.668544966572807, 1.9761207545891006]
+[0.17724971919484672, 2.0690130573048195]
+[0, 1.8]]
 
 output_file = open("path.csv",'w')
 for node in path:
