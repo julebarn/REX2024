@@ -87,7 +87,7 @@ rrt.plot_final(path)
 
 output_file = open("path.csv",'w')
 for node in path:
-        output_file.write("%s\n" % node)
+        output_file.write("\n" + node)
 output_file.close
 
 # def goLine(dist):
