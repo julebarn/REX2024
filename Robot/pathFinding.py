@@ -16,7 +16,7 @@ aruco_dict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_6X6_250)
 parameters = cv2.aruco.DetectorParameters_create()
 
 bias  = calibration["bias"]
-speed = 100
+speed = 60
 
 def movement(prev_state, p):
     prev, angle, d = prev_state
@@ -58,6 +58,10 @@ dcof = np.array([0,0,0,0])
 
 rvecs, tvecs, _ = cv2.aruco.estimatePoseSingleMarkers(corners, .145, cmat, dcof)
 
+if rvecs is None:
+    rvecs = []	
+if tvecs is None:
+    tvecs = []	
 def getCenter(rvec, tvec):
     rotation_matrix, _ = cv2.Rodrigues(rvec)
     point_marker_coords = np.array([0, 0, -0.14])  # 14 cm behind, along the negative z-axis
@@ -80,15 +84,18 @@ map_size = (1.8, 3)
 
 rrt = RRT(start, goal, map_size, obstacles, step_size=0.5, max_iter=1000)
 
+path = []
 rrt.plot_initial()
-#path = rrt.find_path()
-path = [[0, 0],[0.27558484319520465, 0.41719658939290777],
-[0.7364580606932789, 0.611093153036962],
-[0.7549048590666272, 1.1107527527944099],
-[0.957324827579686, 1.567946537033842],
-[0.668544966572807, 1.9761207545891006],
-[0.17724971919484672, 2.0690130573048195],
-[0, 1.8]]
+if len(tvecs) == 0 or len(rvecs) == 0:
+	path = [[0, 0],[0.27558484319520465, 0.41719658939290777],
+	[0.7364580606932789, 0.611093153036962],
+	[0.7549048590666272, 1.1107527527944099],
+	[0.957324827579686, 1.567946537033842],
+	[0.668544966572807, 1.9761207545891006],
+	[0.17724971919484672, 2.0690130573048195],
+	[0, 1.8]]
+else:
+	path = rrt.find_path()
 rrt.plot_final(path)
 
 
