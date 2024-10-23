@@ -80,7 +80,7 @@ def calibrate_rotation(agent=arlo):
 
     for n in range(2):
         for i in range(2,5):
-            agent.go_diff(60, 60, 1, 0)
+            agent.go_diff(60, 60, 0, 1)
             sleep(full_rotation / i)
             agent.stop()
             res.append((i, int(input("Degrees turned?: "))))
@@ -88,7 +88,6 @@ def calibrate_rotation(agent=arlo):
     return np.polyfit(*np.array(res).T, 1)
 
 if __name__ == "__main__":
-    bias       = calibrate_differential(arlo)
-    print(bias)
+    #bias       = calibrate_differential(arlo)
     #print(calibrate_speed())
-    #calibrate_rotation()
+    calibrate_rotation()
