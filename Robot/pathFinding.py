@@ -4,11 +4,11 @@ import numpy as np
 from robot import Robot 
 from functools import partial
 import time
-from calibration import calibration
+from Exam.calibration import calibration
 from picamera2 import Picamera2, Preview
 from itertools import accumulate
 from RRT import *
-from calibration import calibration
+from Exam.calibration import calibration
 
 
 
