@@ -18,3 +18,4 @@ path = [
 
 arlo = Robot()
 
+MovePath(arlo,path)
