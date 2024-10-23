@@ -49,6 +49,10 @@ def checkSonar(arlo, stopdist):
         arlo (Robot): The robot object
         stopdist (float): The distance to check for
     """
+    print("Checking sonar")
+    print(arlo.read_front_ping_sensor())
+    print(arlo.read_left_ping_sensor())
+    print(arlo.read_right_ping_sensor())
     return (
         arlo.read_front_ping_sensor() < stopdist or
         arlo.read_back_ping_sensor() < stopdist or 
