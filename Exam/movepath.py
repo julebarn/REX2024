@@ -78,7 +78,10 @@ def rotateDeg(arlo,deg, speed=60, clockwise=False):
     # this is a acceptable assumption since the robot is a circle
     # and should not be close to any objects
 
-    time.sleep(deg/calibration["rotation_speed"])
+    if clockwise:
+        time.sleep(deg/calibration["rotation_speed_clock"])
+    else:
+        time.sleep(deg/calibration["rotation_speed_anticlock"])
     
     arlo.stop()
     time.sleep(0.5)
