@@ -32,12 +32,12 @@ def calibrate_differential(agent=arlo):
     res  = .1
 
     agent.go_diff(speed,speed, 1, 1)
-    sleep(1)
+    sleep(2)
     agent.stop()
 
     for i in range(5):
-        agent.go_diff(100 * (1+bias),100 * (1-bias), 1, 1)
-        sleep(1)
+        agent.go_diff(speed * (1+bias),speed * (1-bias), 1, 1)
+        sleep(2)
         agent.stop()
         if input("Drifting left? [y/n] ") == "y":
             bias += res
