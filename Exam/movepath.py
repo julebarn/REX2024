@@ -32,6 +32,7 @@ def goDist(arlo,dist, speed=60, stopdist = 0.5):
 
     while time.time() < stopTime:
         if checkSonar(arlo, stopdist):
+            print("Object detected")
             arlo.stop()
             return False
 
