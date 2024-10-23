@@ -89,5 +89,6 @@ def calibrate_rotation(agent=arlo):
 
 if __name__ == "__main__":
     bias       = calibrate_differential(arlo)
+    print(bias)
     #print(calibrate_speed())
     #calibrate_rotation()
