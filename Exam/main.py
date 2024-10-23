@@ -12,4 +12,4 @@ path = [[0, 0],[0.27558484319520465, 0.41719658939290777],
 
 arlo = Robot()
 
-goDist(arlo,200, speed=60, stopdist = 500)
+goDist(arlo,2, speed=60, stopdist = 500)
