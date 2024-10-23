@@ -19,7 +19,7 @@ def goDist(arlo,dist, speed=60, stopdist = 0.5):
 
     print("Going", dist, "meters")
 
-    if chaeckSonar(arlo, stopdist):
+    if checkSonar(arlo, stopdist):
         arlo.stop()
         return False
 
@@ -31,7 +31,7 @@ def goDist(arlo,dist, speed=60, stopdist = 0.5):
     arlo.go_diff(lspeed,rspeed, 1, 1)
 
     while time.time() > stopTime:
-        if chaeckSonar(arlo, stopdist):
+        if checkSonar(arlo, stopdist):
             arlo.stop()
             return False
 
@@ -41,7 +41,7 @@ def goDist(arlo,dist, speed=60, stopdist = 0.5):
     time.sleep(0.5)
     return True
 
-def chaeckSonar(arlo, stopdist):
+def checkSonar(arlo, stopdist):
     """ Check if any of the sonar sensors detect an object within stopdist meters
 
     Args:
