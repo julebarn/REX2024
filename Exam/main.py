@@ -1,4 +1,4 @@
-from movepath import MovePath
+from movepath import * 
 from robot import Robot
 
 
@@ -12,5 +12,5 @@ path = [[0, 0],[0.27558484319520465, 0.41719658939290777],
 
 arlo = Robot()
 
-MovePath(arlo,path)
+goDist(arlo,100,60,500)
 
