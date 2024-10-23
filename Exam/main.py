@@ -1,5 +1,5 @@
 from movepath import MovePath
-from robotDummy import Robot
+from robot import Robot
 
 
 path = [[0, 0],[0.27558484319520465, 0.41719658939290777],
