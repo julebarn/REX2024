@@ -13,4 +13,4 @@ arlo = Robot()
 
 # MovePath(arlo,path)
 
-rotateDeg(arlo,90,60,False)
+MovePath(arlo,path)
