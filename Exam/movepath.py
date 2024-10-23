@@ -67,8 +67,8 @@ def rotateDeg(arlo,deg, speed=60, clockwise=False):
     lspeed = speed * (1+calibration["bias"])
     rspeed = speed * (1-calibration["bias"])
 
-    dirLeft  = 0 if clockwise else 1
-    dirRight = 1 if clockwise else 0
+    dirLeft  = 1 if clockwise else 0
+    dirRight = 0 if clockwise else 1
 
     arlo.go_diff(lspeed, rspeed, dirLeft, dirRight)
 
