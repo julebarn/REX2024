@@ -5,7 +5,7 @@ import math
 
 
 
-def goDist(arlo,dist, speed=60, stopdist = 0.5):
+def goDist(arlo,dist, speed=60, stopdist = 500):
     """Move the robot a distance in meters 
     If a object is detected within stopdist meters the robot stops and returns False
     Otherwise it returns True
@@ -14,7 +14,7 @@ def goDist(arlo,dist, speed=60, stopdist = 0.5):
         arlo (Robot): The robot object
         dist (float): The distance to move in meters
         speed (int, optional): The speed of the robot. Defaults to 60.
-        stopdist (float, optional): The distance to stop if an object is detected. Defaults to 0.5.
+        stopdist (int, optional): The distance to stop if an object is detected. Defaults to 500mm
     """
 
     print("Going", dist, "meters")
@@ -47,7 +47,7 @@ def checkSonar(arlo, stopdist):
 
     Args:
         arlo (Robot): The robot object
-        stopdist (float): The distance to check for
+        stopdist (int): The distance to check for
     """
     print("Checking sonar")
     print(arlo.read_front_ping_sensor())
