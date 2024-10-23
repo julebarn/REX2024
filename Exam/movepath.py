@@ -50,9 +50,7 @@ def checkSonar(arlo, stopdist):
         stopdist (int): The distance to check for
     """
     print("Checking sonar")
-    print(arlo.read_front_ping_sensor())
-    print(arlo.read_left_ping_sensor())
-    print(arlo.read_right_ping_sensor())
+
     return (
         arlo.read_front_ping_sensor() < stopdist or
         arlo.read_back_ping_sensor() < stopdist or 
@@ -69,8 +67,8 @@ def rotateDeg(arlo,deg, speed=60, clockwise=False):
     lspeed = speed * (1+calibration["bias"])
     rspeed = speed * (1-calibration["bias"])
 
-    dirLeft  = 0 if clockwise else 1
-    dirRight = 1 if clockwise else 0
+    dirLeft  = 1 if clockwise else 0
+    dirRight = 0 if clockwise else 1
 
     arlo.go_diff(lspeed, rspeed, dirLeft, dirRight)
 
@@ -80,7 +78,10 @@ def rotateDeg(arlo,deg, speed=60, clockwise=False):
     # this is a acceptable assumption since the robot is a circle
     # and should not be close to any objects
 
-    time.sleep(deg/calibration["rotation_speed"])
+    if clockwise:
+        time.sleep(deg/calibration["rotation_speed_clock"])
+    else:
+        time.sleep(deg/calibration["rotation_speed_anticlock"])
     
     arlo.stop()
     time.sleep(0.5)
