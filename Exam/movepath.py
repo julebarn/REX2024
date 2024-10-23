@@ -30,7 +30,7 @@ def goDist(arlo,dist, speed=60, stopdist = 0.5):
     
     arlo.go_diff(lspeed,rspeed, 1, 1)
 
-    while time.time() > stopTime:
+    while time.time() < stopTime:
         if checkSonar(arlo, stopdist):
             arlo.stop()
             return False
