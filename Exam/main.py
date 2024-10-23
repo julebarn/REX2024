@@ -12,5 +12,5 @@ path = [[0, 0],[0.27558484319520465, 0.41719658939290777],
 
 arlo = Robot()
 
-goDist(arlo,100,60,500)
+rotateDeg(arlo,90,60,True)
 
