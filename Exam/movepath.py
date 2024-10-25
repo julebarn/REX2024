@@ -53,7 +53,7 @@ def checkSonar(arlo, stopdist):
 
     return (
         arlo.read_front_ping_sensor() < stopdist or
-        arlo.read_back_ping_sensor() < stopdist or 
+        # arlo.read_back_ping_sensor() < stopdist or 
         arlo.read_left_ping_sensor() < stopdist or 
         arlo.read_right_ping_sensor() < stopdist )
     

@@ -34,7 +34,7 @@ def Spot(arlo):
 
     for i in range(8):
         m = spotMarkers()
-        markers.extend(m)
+        markers = markers + m
         movepath.rotateDeg(arlo, 45)
 	
     for i in markers:
