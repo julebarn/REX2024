@@ -51,6 +51,7 @@ def spotMarkers():
     
     rvecs, tvecs, _ = cv2.aruco.estimatePoseSingleMarkers(corners, .145, cmat, dcof)
     
+    ids   = ids   if ids   is not None else []
     rvecs = rvecs if rvecs is not None else []
     tvecs = tvecs if tvecs is not None else []
 
