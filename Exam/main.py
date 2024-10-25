@@ -12,8 +12,9 @@ path =[
 	[0, 1.8]
     ]
 
+
 arlo = Robot()
 
 MovePath(arlo,path)
 
-#goDist(arlo,1,60,500)
+
