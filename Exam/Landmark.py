@@ -36,7 +36,9 @@ def Spot(arlo):
         m = spotMarkers()
         markers.extend(m)
         movepath.rotateDeg(arlo, 45)
-
+	
+    for i in markers:
+        print(i)
     print(markers)
     return markers
 
@@ -60,5 +62,5 @@ def spotMarkers():
 
     print(Markers)
 
-    return Markers
+    return ids
 

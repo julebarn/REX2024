@@ -1,7 +1,7 @@
 calibration = {
     "rotation_speed_clock": 115,
     # deg per second @ 60, turning clockwise
-    "rotation_speed_anticlock": 100,
+    "rotation_speed_anticlock": 90,
     # deg per second @ 60, turning anticlockwise
     "bias": -0.09375,
     # 100 * (1+bias),100 * (1-bias)
