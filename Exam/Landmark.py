@@ -37,14 +37,23 @@ def Spot(arlo):
         markers.extend(m)
         movepath.rotateDeg(arlo, 45)
 
+    print(markers)
+    return markers
+
 
 def spotMarkers():
     img = cam.capture_array()
     img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
     corners, ids, _ = cv2.aruco.detectMarkers(img, aruco_dict, parameters=parameters)
+    
     print(ids)
     print(corners)
+    
     rvecs, tvecs, _ = cv2.aruco.estimatePoseSingleMarkers(corners, .145, cmat, dcof)
+    
+    rvecs = rvecs if rvecs is not None else []
+    tvecs = tvecs if tvecs is not None else []
+
     print(ids,rvecs, tvecs)
     Markers = [(i, getCenter(r,t)[0][[0,2]]) for i,r,t in zip(ids, rvecs, tvecs)]
 
