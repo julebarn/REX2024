@@ -3,7 +3,7 @@ import numpy as np
 from robot import Robot 
 from functools import partial
 import time
-from calibration import calibration
+from Exam.calibration import calibration
 try:
     from picamera2 import Picamera2, Preview
     print("Camera.py: Using picamera2 module")
