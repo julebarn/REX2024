@@ -4,7 +4,6 @@ from calibration import calibration
 import math
 
 
-
 def goDist(arlo,dist, speed=60, stopdist = 500):
     """Move the robot a distance in meters 
     If a object is detected within stopdist meters the robot stops and returns False
@@ -44,6 +43,7 @@ def goDist(arlo,dist, speed=60, stopdist = 500):
     time.sleep(0.5)
     return True
 
+
 def checkSonar(arlo, stopdist):
     """ Check if any of the sonar sensors detect an object within stopdist meters
 
@@ -59,9 +59,6 @@ def checkSonar(arlo, stopdist):
         arlo.read_left_ping_sensor() < stopdist or 
         arlo.read_right_ping_sensor() < stopdist )
     
-    
-   
-
 
 def rotateDeg(arlo,deg, speed=60, clockwise=False):
     print("Rotating", deg, "degrees", ("clockwise" if clockwise else "countercloskwise"))
