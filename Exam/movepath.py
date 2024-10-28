@@ -97,8 +97,12 @@ def movement(prev_state, p):
     angleNext = math.degrees(math.atan2(cx-px, cy-py)) 
     
     return (p,
+<<<<<<< HEAD
             angle_acc + (angle - angleNext),
             angleNext - angle_acc,
+=======
+            math.degrees(math.atan2((prev[1]-p[1]),(prev[0]-p[0]))),
+>>>>>>> d93ab0eaed84928180af679b86cbd9f89d403b5e
             math.dist(prev, p))
 
 
