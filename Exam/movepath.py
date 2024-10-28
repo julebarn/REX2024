@@ -87,18 +87,23 @@ def rotateDeg(arlo,deg, speed=60, clockwise=False):
 
 
 def movement(prev_state, p):
-    prev, angle, d = prev_state
+    prev, angle_acc, angle, d = prev_state
+    (px, py), (cx, cy) = prev, p
 
     if (prev[1]-p[1]) == 0:
         return (p, 0, math.dist(prev, p))
+
+    print(f"{math.degrees(math.atan2(cx-px, cy-py))=}")
+    angleNext = math.degrees(math.atan2(cx-px, cy-py)) 
     
     return (p,
-            math.degrees(math.atan2((prev[0]-p[0]),(prev[1]-p[1]))) - angle,
+            angle_acc + (angle - angleNext),
+            angleNext - angle_acc,
             math.dist(prev, p))
 
 
 def MovePath(arlo,path):
-    for _, turn, dist in accumulate(path, movement, initial=((0,0),0,0)):
+    for _,_, turn, dist in accumulate(path, movement, initial=((0,0),0,0,0)):
         clockwise = False if turn < 0 else True
         turn = abs(turn)        
     
