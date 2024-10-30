@@ -66,7 +66,7 @@ def rotateDeg(arlo,deg, speed=60):
     rspeed = speed * (1-calibration["bias"])
     clockwise = False
     if deg<0:
-        closkwise = False
+        clockwise = False
         deg = abs(deg)
     else:
         clockwise = True
