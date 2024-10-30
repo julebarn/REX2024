@@ -4,6 +4,7 @@ from robot import Robot
 from time import sleep
 import json
 import numpy as np
+from calibration import calibration
 
 arlo = Robot()
 
@@ -49,13 +50,20 @@ def calibrate_differential(agent=arlo):
 
 def calibrate_speed(agent=arlo):
     # returns time to move 1 meter
-    speed = 100
-    time = 1.5
+    speed = 60
+    lspeed = speed * (1+calibration["bias"])
+    rspeed = speed * (1-calibration["bias"])
+    time = 2.5
     bias = 1.5
 
+
     for i in range(4):
+        
         print(f"{time=}")
-        agent.go_diff(100, 100, 1, 1)
+        #adjust for motor issue
+        arlo.go_diff(lspeed,rspeed,0,1)
+        sleep(0.1)
+        agent.go_diff(lspeed, rspeed, 1, 1)
         sleep(time)
         agent.stop()
         if input("Above 1 meter [y/n] ") == "y":
@@ -89,5 +97,5 @@ def calibrate_rotation(agent=arlo):
 
 if __name__ == "__main__":
     #bias       = calibrate_differential(arlo)
-    #print(calibrate_speed())
-    calibrate_rotation()
+    print(calibrate_speed())
+    #calibrate_rotation()

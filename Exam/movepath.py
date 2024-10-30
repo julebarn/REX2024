@@ -25,8 +25,9 @@ def goDist(arlo,dist, speed=60, stopdist = 500):
     lspeed = speed * (1+calibration["bias"])
     rspeed = speed * (1-calibration["bias"])
 
+    #adjust for motor issue
     arlo.go_diff(lspeed,rspeed,0,1)
-    time.sleep(0.05)
+    time.sleep(0.2)
     stopTime = time.time() + calibration["speed"]*dist
     
     arlo.go_diff(lspeed,rspeed, 1, 1)
@@ -60,15 +61,22 @@ def checkSonar(arlo, stopdist):
         arlo.read_right_ping_sensor() < stopdist )
     
 
-def rotateDeg(arlo,deg, speed=60, clockwise=False):
-    print("Rotating", deg, "degrees", ("clockwise" if clockwise else "countercloskwise"))
+def rotateDeg(arlo,deg, speed=60):
     
     lspeed = speed * (1+calibration["bias"])
     rspeed = speed * (1-calibration["bias"])
-
+    clockwise = False
+    if deg>0:
+        clockwise = False
+        deg = abs(deg)
+    else:
+        clockwise = True
+        deg = abs(deg)
+    
     dirLeft  = 1 if clockwise else 0
     dirRight = 0 if clockwise else 1
 
+    print("Rotating", deg, "degrees", ("clockwise" if clockwise else "countercloskwise"))
     arlo.go_diff(lspeed, rspeed, dirLeft, dirRight)
 
     # here we make the assumption that the robot rotates in place
@@ -77,41 +85,63 @@ def rotateDeg(arlo,deg, speed=60, clockwise=False):
     # this is a acceptable assumption since the robot is a circle
     # and should not be close to any objects
 
-    if clockwise:
-        time.sleep(deg/calibration["rotation_speed_clock"])
-    else:
-        time.sleep(deg/calibration["rotation_speed_anticlock"])
+    time.sleep(deg/calibration["rotation_speed"])
     
     arlo.stop()
     time.sleep(0.5)
 
 
 
-def movement(prev_state, p):
-    prev, angle_acc, angle, d = prev_state
-    (px, py), (cx, cy) = prev, p
+def getPath(path):
+    """
+    This function takes a list of [x,y] coordinates,
+    and returns a list of angles and a list of distances
+    that create a path of how arlo should move
+    """
+    # Start at 90 degrees (facing the positive y-axis)
+    current_angle = 90
+    angles_to_turn = []
+    distances_to_move = []
 
-    if (prev[1]-p[1]) == 0:
-        return (p, 0,0, math.dist(prev, p))
+    # Iterate through the list of path
+    for i in range(1, len(path)):
+        # Current and next point
+        x1, y1 = path[i - 1]
+        x2, y2 = path[i]
+        
+        # Calculate target angle relative to positive y-axis
+        delta_x = x2 - x1
+        delta_y = y2 - y1
+        target_angle = math.degrees(math.atan2(delta_y, delta_x))  # angle relative to x-axis
 
-    print(f"{math.degrees(math.atan2(cx-px, cy-py))=}")
-    angleNext = math.degrees(math.atan2(cx-px, cy-py)) 
-    
-    return (p,
-            angle_acc + (angle - angleNext),
-            angleNext - angle_acc,
-           # math.degrees(math.atan2((prev[1]-p[1]),(prev[0]-p[0]))),
-            math.dist(prev, p))
+        # Calculate the angle difference relative to the current angle
+        angle_difference = target_angle - current_angle
+
+        # Adjust angle difference for shortest rotation (between -180 and 180)
+        if angle_difference > 180:
+            angle_difference -= 360
+        elif angle_difference < -180:
+            angle_difference += 360
+
+        # Calculate the distance to move
+        distance = math.sqrt(delta_x ** 2 + delta_y ** 2)
+
+        # Store the angle to turn and distance to move
+        angles_to_turn.append(angle_difference)
+        distances_to_move.append(distance)
+
+        # Update the current angle to face the target direction
+        current_angle += angle_difference
+
+    return angles_to_turn, distances_to_move
+
 
 
 
 def MovePath(arlo,path):
-    for _,_, turn, dist in accumulate(path, movement, initial=((0,0),0,0,0)):
-        clockwise = False if turn < 0 else True
-        turn = abs(turn)        
-    
-        rotateDeg(arlo,turn,60,clockwise)
-        finished = goDist(arlo,dist)
-        if not finished:
-            # TODO a better way to handle this
-            break
+    angles,dists = getPath(path)
+    print(angles)
+    for i in range(len(angles)):
+        rotateDeg(arlo,angles[i])
+        time.sleep(0.2)
+        goDist(arlo,dists[i])
