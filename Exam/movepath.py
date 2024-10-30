@@ -51,7 +51,7 @@ def checkSonar(arlo, stopdist):
         arlo (Robot): The robot object
         stopdist (int): The distance to check for
     """
-    print("Checking sonar")
+    # print("Checking sonar")
 
     return (
         arlo.read_front_ping_sensor() < stopdist or
@@ -100,7 +100,6 @@ def movement(prev_state, p):
     return (p,
             angle_acc + (angle - angleNext),
             angleNext - angle_acc,
-            # math.degrees(math.atan2((prev[1]-p[1]),(prev[0]-p[0]))),
             math.dist(prev, p))
 
 
