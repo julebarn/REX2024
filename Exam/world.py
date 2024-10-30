@@ -1,5 +1,6 @@
-from self_local import EstimatePosition
+
 import math
+from self_local import EstimatePosition
 from RRT import RRT
 
 
@@ -39,24 +40,35 @@ landmarksObstacles = [
     (4, 500, 400)
 ]
 
+obstacles = {}
+obstacleRadius = 20
+def addObstacle(id, rx, ry):
+    pos = EstimatePosition()
+
+    # TODO
+    x = pos[0] + rx
+    y = pos[1] + ry
+    
+    obstacles[id] = (x, y)
+
 def MakePath(local, target):
-    lx, ly, _ = local
+    lx, ly, lt = local
     tx, ty = getLandmark(target)
     # a path is a list of points to visit 
 
-    Obstacles = []
+    O = []
 
     for (i , ox, oy) in landmarksObstacles:
         radius = landmarkRadius
         if i == target:
             radius = TargetRadius 
-        Obstacles.append((ox, oy, radius))
+        O.append((ox, oy, radius))
 
-    # TODO add obstacle to the Obstacles list
-    
+    for (i, ox, oy) in obstacles.items():
+        O.append((ox, oy, obstacleRadius))
 
     rrt = RRT((lx, ly), (tx, ty), 
-               obstacles= Obstacles, 
+               obstacles= O, 
                map_size=(600, 500))  
     path = rrt.find_path()
 

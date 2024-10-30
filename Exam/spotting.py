@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 from picamera2 import Picamera2, Preview
 import movepath
-from world import isLandmark, getLandmark
+from world import isLandmark, getLandmark, addObstacle
 from self_local import sensor_weights, getSamples, setSamples, resample_map
 
 
@@ -76,8 +76,15 @@ def spotMarkers():
 
             continue
         print("obstacle", ids[i][0])
-        #TODO find the location of the obstacle
-        # and add it to the map
+    
+        
+        center = getCenter(rvecs[i], tvecs[i])
+        print("Center", center)
+
+        addObstacle(ids[i][0], center[0], center[1])
+
+
+
 
     return ids
 
