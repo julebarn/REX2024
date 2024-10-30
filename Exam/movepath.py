@@ -61,7 +61,6 @@ def checkSonar(arlo, stopdist):
     
 
 def rotateDeg(arlo,deg, speed=60):
-    # print("Rotating", deg, "degrees", ("clockwise" if clockwise else "countercloskwise"))
     
     lspeed = speed * (1+calibration["bias"])
     rspeed = speed * (1-calibration["bias"])
@@ -75,6 +74,7 @@ def rotateDeg(arlo,deg, speed=60):
     dirLeft  = 1 if clockwise else 0
     dirRight = 0 if clockwise else 1
 
+    print("Rotating", deg, "degrees", ("clockwise" if clockwise else "countercloskwise"))
     arlo.go_diff(lspeed, rspeed, dirLeft, dirRight)
 
     # here we make the assumption that the robot rotates in place
