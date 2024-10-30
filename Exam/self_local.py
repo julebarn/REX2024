@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import numpy as np
+import numpy.random as rand
 import math
 from scipy.stats import norm, multivariate_normal
 
@@ -45,11 +46,11 @@ def resample_map(samples, w=None, jitter=0, n=1000):
     p = w/w.sum() if w else None
     return samples[np.random.choice(len(samples), n, p=p)]
 
-def init_map(loc, var, n=1000):
-    X = rand.normal(loc, var, (n, len(var)))
-    W = multivariate_normal(loc, var).pdf(X)
-    X = np.hstack((X,rand.uniform(0, math.tau, n)[np.newaxis].T))
-    return sampler(X, p=W/W.sum())
+def init_map(x_range, y_range, n=1000):
+    X = rand.uniform(0, x_range,  n)
+    Y = rand.uniform(0, y_range,  n)
+    T = rand.uniform(0, math.tau, n)
+    return np.vstack((X,Y,T)).T
 
 
 # 👇 below comment refers to code below this line 👇
