@@ -86,12 +86,13 @@ def rotateDeg(arlo,deg, speed=60, clockwise=False):
     time.sleep(0.5)
 
 
+
 def movement(prev_state, p):
     prev, angle_acc, angle, d = prev_state
     (px, py), (cx, cy) = prev, p
 
     if (prev[1]-p[1]) == 0:
-        return (p, 0, math.dist(prev, p))
+        return (p, 0,0, math.dist(prev, p))
 
     print(f"{math.degrees(math.atan2(cx-px, cy-py))=}")
     angleNext = math.degrees(math.atan2(cx-px, cy-py)) 
@@ -101,7 +102,6 @@ def movement(prev_state, p):
             angleNext - angle_acc,
             math.degrees(math.atan2((prev[1]-p[1]),(prev[0]-p[0]))),
             math.dist(prev, p))
-
 
 
 
