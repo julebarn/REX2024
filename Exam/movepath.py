@@ -97,8 +97,8 @@ def movement(prev_state, p):
     angleNext = math.degrees(math.atan2(cx-px, cy-py)) 
     
     return (p,
-            # angle_acc + (angle - angleNext),
-            # angleNext - angle_acc,
+            angle_acc + (angle - angleNext),
+            angleNext - angle_acc,
             math.degrees(math.atan2((prev[1]-p[1]),(prev[0]-p[0]))),
             math.dist(prev, p))
 
@@ -106,7 +106,7 @@ def movement(prev_state, p):
 
 
 def MovePath(arlo,path):
-    for _, turn, dist in accumulate(path, movement, initial=((0,0),0,0,0)):
+    for _,_, turn, dist in accumulate(path, movement, initial=((0,0),0,0,0)):
         clockwise = False if turn < 0 else True
         turn = abs(turn)        
     
