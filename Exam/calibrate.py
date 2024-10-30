@@ -4,7 +4,7 @@ from robot import Robot
 from time import sleep
 import json
 import numpy as np
-import calibration
+from calibration import calibration
 
 arlo = Robot()
 
