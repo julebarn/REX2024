@@ -21,4 +21,6 @@ path = [
 
 arlo = Robot()
 
-MovePath(arlo,path)
+# MovePath(arlo,path)
+
+goDist(arlo,3)
