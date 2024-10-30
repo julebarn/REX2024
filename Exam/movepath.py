@@ -86,38 +86,22 @@ def rotateDeg(arlo,deg, speed=60, clockwise=False):
     time.sleep(0.5)
 
 
-# def movement(prev_state, p):
-#     prev, angle_acc, angle, d = prev_state
-#     (px, py), (cx, cy) = prev, p
-
-#     if (prev[1]-p[1]) == 0:
-#         return (p, 0, math.dist(prev, p))
-
-#     print(f"{math.degrees(math.atan2(cx-px, cy-py))=}")
-#     angleNext = math.degrees(math.atan2(cx-px, cy-py)) 
-    
-#     return (p,
-#             angle_acc + (angle - angleNext),
-#             angleNext - angle_acc,
-#             math.degrees(math.atan2((prev[1]-p[1]),(prev[0]-p[0]))),
-#             math.dist(prev, p))
-
 def movement(prev_state, p):
     prev, angle_acc, angle, d = prev_state
     (px, py), (cx, cy) = prev, p
 
-    # Avoid division by zero when calculating angles
-    if (px - cx) == 0 and (py - cy) == 0:
-        return (p, angle_acc, angle, d)  # No change in angle or distance if points are the same
+    if (prev[1]-p[1]) == 0:
+        return (p, 0, math.dist(prev, p))
 
-    # Calculate next angle
-    angleNext = math.degrees(math.atan2(cy - py, cx - px))
-    turn_angle = angleNext - angle
+    print(f"{math.degrees(math.atan2(cx-px, cy-py))=}")
+    angleNext = math.degrees(math.atan2(cx-px, cy-py)) 
+    
+    return (p,
+            angle_acc + (angle - angleNext),
+            angleNext - angle_acc,
+            math.degrees(math.atan2((prev[1]-p[1]),(prev[0]-p[0]))),
+            math.dist(prev, p))
 
-    # Accumulate angle and calculate distance
-    distance = math.dist(prev, p)
-
-    return (p, angle_acc + turn_angle, angleNext, distance)
 
 
 def MovePath(arlo,path):
