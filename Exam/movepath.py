@@ -70,6 +70,7 @@ def rotateDeg(arlo,deg, speed=60):
         deg = abs(deg)
     else:
         clockwise = True
+        deg = abs(deg)
     
     dirLeft  = 1 if clockwise else 0
     dirRight = 0 if clockwise else 1
