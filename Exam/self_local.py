@@ -67,6 +67,7 @@ def getSamples():
     return samples
 
 def setSamples(s):
+    global samples
     samples = s
     print(f"EstimatePosition: {EstimatePosition()}")
 

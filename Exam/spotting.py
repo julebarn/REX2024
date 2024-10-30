@@ -4,7 +4,7 @@ import numpy as np
 from picamera2 import Picamera2, Preview
 import movepath
 from world import isLandmark, getLandmark
-from self_local import sensor_weights, getSamples, setSamples
+from self_local import sensor_weights, getSamples, setSamples, resample_map
 
 
 def getCenter(rvec, tvec):
@@ -70,9 +70,9 @@ def spotMarkers():
             lx, ly = getLandmark(ids[i][0])
             lm = (lx, ly, rx, ry)
 
-            # TODO is this the correct way to do it?
-            # and do we need to resample??
-            setSamples(sensor_weights(getSamples, lm))
+    
+            setSamples(sensor_weights(getSamples(), lm))
+            setSamples(resample_map(getSamples()))
 
             continue
         print("obstacle", ids[i][0])

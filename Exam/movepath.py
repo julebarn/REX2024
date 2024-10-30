@@ -43,9 +43,8 @@ def goDist(arlo,dist, speed=60, stopdist = 500):
     arlo.stop()
     time.sleep(0.5)
     
-    # TODO is this the correct way to do it?
-    # and do we need to resample??
-    setSamples(move_samples(getSamples, 0, dist))
+
+    setSamples(move_samples(getSamples(), 0, dist))
      
     return True
 
@@ -92,8 +91,6 @@ def rotateDeg(arlo,deg, speed=60, clockwise=False):
     time.sleep(0.5)
 
         
-    # TODO is this the correct way to do it?
-    # and do we need to resample??
     setSamples(move_samples(getSamples, deg, 0))
 
 
@@ -123,4 +120,6 @@ def MovePath(arlo,path):
         finished = goDist(arlo,dist)
         if not finished:
             # TODO a better way to handle this
+            return False
             break
+    return True

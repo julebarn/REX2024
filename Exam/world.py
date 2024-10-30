@@ -5,10 +5,10 @@ from RRT import RRT
 
 
 landmarks = {
-    1: (0, 0),
-    2: (0, 300),
-    3: (400, 0),
-    4: (400, 300)
+    1: (100, 100),
+    2: (100, 400),
+    3: (500, 100),
+    4: (500, 400)
 }
 
 def isLandmark(id):
@@ -33,10 +33,10 @@ landmarkRadius = 50
 TargetRadius = 20
 landmarksObstacles = [
     # (id , x, y)
-    (1, 0, 0),
-    (2, 0, 300),
-    (3, 400, 0),
-    (4, 400, 300)
+    (1, 100, 100),
+    (2, 100, 400),
+    (3, 500, 100),
+    (4, 500, 400)
 ]
 
 def MakePath(local, target):
@@ -54,11 +54,10 @@ def MakePath(local, target):
 
     # TODO add obstacle to the Obstacles list
     
-    # TODO i am unsure if RRT implementation allows for the robot to be outside the map 
-    # whcih is needed for the the coordinates of the landmarks to work
+
     rrt = RRT((lx, ly), (tx, ty), 
                obstacles= Obstacles, 
-               map_size=(400, 400))  
+               map_size=(600, 500))  
     path = rrt.find_path()
 
     return path
