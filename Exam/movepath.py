@@ -106,7 +106,7 @@ def movement(prev_state, p):
 
 
 def MovePath(arlo,path):
-    for _,_, turn, dist in accumulate(path, movement, initial=((0,0),0,0,0)):
+    for _, turn, dist in accumulate(path, movement, initial=((0,0),0,0,0)):
         clockwise = False if turn < 0 else True
         turn = abs(turn)        
     
