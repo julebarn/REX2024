@@ -91,34 +91,23 @@ def rotateDeg(arlo,deg, speed=60):
     time.sleep(0.5)
 
 
-# def movement(prev_state, p):
-#     prev, angle_acc, angle, d = prev_state
-#     (px, py), (cx, cy) = prev, p
 
-#     if (prev[1]-p[1]) == 0:
-#         return (p, 0, math.dist(prev, p))
-
-#     print(f"{math.degrees(math.atan2(cx-px, cy-py))=}")
-#     angleNext = math.degrees(math.atan2(cx-px, cy-py)) 
-    
-#     return (p,
-#             angle_acc + (angle - angleNext),
-#             angleNext - angle_acc,
-#             math.degrees(math.atan2((prev[1]-p[1]),(prev[0]-p[0]))),
-#             math.dist(prev, p))
-
-
-def calculate_turn_angles_and_distances(coordinates):
+def getPath(path):
+    """
+    This function takes a list of [x,y] coordinates,
+    and returns a list of angles and a list of distances
+    that create a path of how arlo should move
+    """
     # Start at 90 degrees (facing the positive y-axis)
     current_angle = 90
     angles_to_turn = []
     distances_to_move = []
 
-    # Iterate through the list of coordinates
-    for i in range(1, len(coordinates)):
+    # Iterate through the list of path
+    for i in range(1, len(path)):
         # Current and next point
-        x1, y1 = coordinates[i - 1]
-        x2, y2 = coordinates[i]
+        x1, y1 = path[i - 1]
+        x2, y2 = path[i]
         
         # Calculate target angle relative to positive y-axis
         delta_x = x2 - x1
@@ -148,7 +137,7 @@ def calculate_turn_angles_and_distances(coordinates):
 
 
 def MovePath(arlo,path):
-    angles,dists = calculate_turn_angles_and_distances(path)
+    angles,dists = getPath(path)
     print(angles)
     for i in range(len(angles)):
         rotateDeg(arlo,angles[i])
