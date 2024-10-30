@@ -60,12 +60,18 @@ def checkSonar(arlo, stopdist):
         arlo.read_right_ping_sensor() < stopdist )
     
 
-def rotateDeg(arlo,deg, speed=60, clockwise=False):
-    print("Rotating", deg, "degrees", ("clockwise" if clockwise else "countercloskwise"))
+def rotateDeg(arlo,deg, speed=60):
+    # print("Rotating", deg, "degrees", ("clockwise" if clockwise else "countercloskwise"))
     
     lspeed = speed * (1+calibration["bias"])
     rspeed = speed * (1-calibration["bias"])
-
+    clockwise = False
+    if deg<0:
+        closkwise = False
+        deg = abs(deg)
+    else:
+        clockwise = True
+    
     dirLeft  = 1 if clockwise else 0
     dirRight = 0 if clockwise else 1
 
