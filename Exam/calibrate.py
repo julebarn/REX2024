@@ -62,7 +62,7 @@ def calibrate_speed(agent=arlo):
         print(f"{time=}")
         #adjust for motor issue
         arlo.go_diff(lspeed,rspeed,0,1)
-        sleep(0.05)
+        sleep(0.1)
         agent.go_diff(lspeed, rspeed, 1, 1)
         sleep(time)
         agent.stop()
