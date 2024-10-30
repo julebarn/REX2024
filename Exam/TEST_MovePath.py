@@ -12,6 +12,7 @@ from robot import Robot
 # 	[0, 1.8]
 #     ]
 
+
 path = [
      [0,0],
      [1,1],
@@ -24,3 +25,4 @@ arlo = Robot()
 MovePath(arlo,path)
 
 #goDist(arlo,3)
+

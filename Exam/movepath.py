@@ -136,6 +136,8 @@ def getPath(path):
     return angles_to_turn, distances_to_move
 
 
+
+
 def MovePath(arlo,path):
     angles,dists = getPath(path)
     print(angles)
