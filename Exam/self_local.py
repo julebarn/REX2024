@@ -1,7 +1,20 @@
 #!/usr/bin/env python3
 import numpy as np
 import math
-from scipy.stats import norm
+from scipy.stats import norm, multivariate_normal
+
+def sampler(X, p=0, n=1000):
+    samples = []
+    r = rand.uniform(0, 1/n)
+    c = p[0]
+    i = 0
+    for m in range(n-1):
+        u = r + (m/n)
+        while u > c:
+            i += 1
+            c += p[i-1]
+        samples.append(X[i-1])
+    return np.array(samples)
 
 
 def move_sample(sample, turn, dist):
@@ -32,6 +45,11 @@ def resample_map(samples, w=None, jitter=0, n=1000):
     p = w/w.sum() if w else None
     return samples[np.random.choice(len(samples), n, p=p)]
 
+def init_map(loc, var, n=1000):
+    X = rand.normal(loc, var, (n, len(var)))
+    W = multivariate_normal(loc, var).pdf(X)
+    X = np.hstack((X,rand.uniform(0, math.tau, n)[np.newaxis].T))
+    return sampler(X, p=W/W.sum())
 
 
 # 👇 below comment refers to code below this line 👇
@@ -43,7 +61,7 @@ def resample_map(samples, w=None, jitter=0, n=1000):
 # and be humbled by its elegance 🤯
 
 n = 1000
-samples = resample_map(np.array([(1+x*13,1+y*13,t*2*math.pi)for x,y,t in np.random.rand(n,3)]))
+samples = init_map((0,0), (2,2), n)
 
 def getSamples():
     return samples
