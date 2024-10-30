@@ -51,7 +51,7 @@ def checkSonar(arlo, stopdist):
         arlo (Robot): The robot object
         stopdist (int): The distance to check for
     """
-    print("Checking sonar")
+    # print("Checking sonar")
 
     return (
         arlo.read_front_ping_sensor() < stopdist or
@@ -154,6 +154,7 @@ def calculate_turn_angles_and_distances(coordinates):
 
 def MovePath(arlo,path):
     angles,dists = calculate_turn_angles_and_distances(path)
+    print(angles)
     for i in range(len(angles)):
         rotateDeg(arlo,angles[i])
         goDist(arlo,dists[i])
