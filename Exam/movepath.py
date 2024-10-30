@@ -148,6 +148,6 @@ def calculate_turn_angles_and_distances(coordinates):
 
 def MovePath(arlo,path):
     angles,dists = calculate_turn_angles_and_distances(path)
-    for a , d in angles , dists:
-        rotateDeg(arlo,a)
-        goDist(arlo,d)
+    for i in range(len(angles)):
+        rotateDeg(arlo,angles[i])
+        goDist(arlo,dists[i])
