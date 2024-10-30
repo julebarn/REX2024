@@ -110,36 +110,35 @@ def rotateDeg(arlo,deg, speed=60):
 
 
 def calculate_turn_angles_and_distances(coordinates):
-    # Starting position and facing angle (0 degrees is along the positive y-axis)
-    current_angle = 90  # Facing positive y-axis (90 degrees)
+    # Start at 90 degrees (facing the positive y-axis)
+    current_angle = 90
     angles_to_turn = []
     distances_to_move = []
 
     # Iterate through the list of coordinates
     for i in range(1, len(coordinates)):
-        # Current point
+        # Current and next point
         x1, y1 = coordinates[i - 1]
-        # Next point
         x2, y2 = coordinates[i]
         
-        # Calculate the angle to the next point
+        # Calculate target angle relative to positive y-axis
         delta_x = x2 - x1
         delta_y = y2 - y1
-        target_angle = math.degrees(math.atan2(delta_x, delta_y))  # Convert to degrees
+        target_angle = math.degrees(math.atan2(delta_x, delta_y))
         
-        # Normalize angles to be between 0 and 360 degrees
+        # Normalize to range [0, 360)
         current_angle = current_angle % 360
         target_angle = target_angle % 360
         
-        # Calculate the angle difference
+        # Calculate turn angle
         angle_difference = target_angle - current_angle
-        
-        # Normalize angle difference to be between -180 and 180 degrees
+
+        # Adjust for shortest turn
         if angle_difference > 180:
-            angle_difference -= 360
+            angle_difference -= 360  # Counterclockwise turn
         elif angle_difference < -180:
-            angle_difference += 360
-        
+            angle_difference += 360  # Clockwise turn
+
         # Calculate the distance to move
         distance = math.sqrt(delta_x ** 2 + delta_y ** 2)
 
@@ -151,6 +150,7 @@ def calculate_turn_angles_and_distances(coordinates):
         current_angle = target_angle
 
     return angles_to_turn, distances_to_move
+
 
 def MovePath(arlo,path):
     angles,dists = calculate_turn_angles_and_distances(path)
