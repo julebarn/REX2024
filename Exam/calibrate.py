@@ -49,13 +49,13 @@ def calibrate_differential(agent=arlo):
 
 def calibrate_speed(agent=arlo):
     # returns time to move 1 meter
-    speed = 100
-    time = 1.5
+    speed = 60
+    time = 2.5
     bias = 1.5
 
     for i in range(4):
         print(f"{time=}")
-        agent.go_diff(100, 100, 1, 1)
+        agent.go_diff(speed, speed, 1, 1)
         sleep(time)
         agent.stop()
         if input("Above 1 meter [y/n] ") == "y":
@@ -89,5 +89,5 @@ def calibrate_rotation(agent=arlo):
 
 if __name__ == "__main__":
     #bias       = calibrate_differential(arlo)
-    #print(calibrate_speed())
-    calibrate_rotation()
+    print(calibrate_speed())
+    #calibrate_rotation()
