@@ -1,6 +1,8 @@
 from movepath import * 
 from robot import Robot
-from spotting import Spot
+from spotting import Spot360
+from world import AtTarget, MakePath
+from self_local import EstimatePosition
 
 
 
@@ -25,24 +27,23 @@ class TargetLandmark:
 target = TargetLandmark()
 arlo = Robot()
 
-#TODO use locilization here 
-Spot(arlo)
+
+Spot360(arlo) 
 
 
 while not target.isDone():
-    if atTarget(local, target.current()):
+    if AtTarget(EstimatePosition(), target.current()):
         target.nextTarget()
     
-    #TODO use locilization here 
-    Spot(arlo)
-
-    path = makePath(arlo, target.current())
+    
+    Spot360(arlo)
+    path = MakePath(EstimatePosition, target.current())
 
     finished = MovePath(arlo, path)
     if not finished:
-        #TODO use locilization here 
-        Spot(arlo)
+        #TODO if this code is reached 
+        # the code just Kidnapped the robot
+        print("Kidnapped by the anti-collision code 😅")
         break
         
-
 

@@ -3,7 +3,8 @@ import cv2
 import numpy as np
 from picamera2 import Picamera2, Preview
 import movepath
-
+from world import isLandmark, getLandmark
+from self_local import sensor_weights, getSamples, setSamples
 
 
 def getCenter(rvec, tvec):
@@ -29,7 +30,7 @@ aruco_dict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_6X6_250)
 parameters = cv2.aruco.DetectorParameters_create()
 
 
-def Spot(arlo):
+def Spot360(arlo):
     markers = []
 
     for i in range(8):
@@ -57,10 +58,26 @@ def spotMarkers():
     rvecs = rvecs if rvecs is not None else []
     tvecs = tvecs if tvecs is not None else []
 
-    print(ids,rvecs, tvecs)
-    Markers = [(i, getCenter(r,t)[0][[0,2]]) for i,r,t in zip(ids, rvecs, tvecs)]
+    for i in range(len(ids)):
+        if isLandmark(ids[i][0]):
+            print("Landmark", ids[i][0])
 
-    print(Markers)
+            center = getCenter(rvecs[i], tvecs[i])
+            print("Center", center)
+
+            # this is relative to the camera not the robot
+            rx, ry = center[0], center[1]
+            lx, ly = getLandmark(ids[i][0])
+            lm = (lx, ly, rx, ry)
+
+            # TODO is this the correct way to do it?
+            # and do we need to resample??
+            setSamples(sensor_weights(getSamples, lm))
+
+            continue
+        print("obstacle", ids[i][0])
+        #TODO find the location of the obstacle
+        # and add it to the map
 
     return ids
 

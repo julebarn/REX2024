@@ -2,6 +2,7 @@ import time
 from itertools import accumulate
 from calibration import calibration
 import math
+from self_local import move_samples, getSamples, setSamples
 
 
 def goDist(arlo,dist, speed=60, stopdist = 500):
@@ -41,6 +42,11 @@ def goDist(arlo,dist, speed=60, stopdist = 500):
     
     arlo.stop()
     time.sleep(0.5)
+    
+    # TODO is this the correct way to do it?
+    # and do we need to resample??
+    setSamples(move_samples(getSamples, 0, dist))
+     
     return True
 
 
@@ -84,6 +90,11 @@ def rotateDeg(arlo,deg, speed=60, clockwise=False):
     
     arlo.stop()
     time.sleep(0.5)
+
+        
+    # TODO is this the correct way to do it?
+    # and do we need to resample??
+    setSamples(move_samples(getSamples, deg, 0))
 
 
 def movement(prev_state, p):
