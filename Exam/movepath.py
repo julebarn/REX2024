@@ -125,20 +125,16 @@ def calculate_turn_angles_and_distances(coordinates):
         # Calculate target angle relative to positive y-axis
         delta_x = x2 - x1
         delta_y = y2 - y1
-        target_angle = math.degrees(math.atan2(delta_x, delta_y))
-        
-        # Normalize to range [0, 360)
-        current_angle = current_angle % 360
-        target_angle = target_angle % 360
-        
-        # Calculate turn angle
+        target_angle = math.degrees(math.atan2(delta_y, delta_x))  # angle relative to x-axis
+
+        # Calculate the angle difference relative to the current angle
         angle_difference = target_angle - current_angle
 
-        # Adjust for shortest turn
+        # Adjust angle difference for shortest rotation (between -180 and 180)
         if angle_difference > 180:
-            angle_difference -= 360  # Counterclockwise turn
+            angle_difference -= 360
         elif angle_difference < -180:
-            angle_difference += 360  # Clockwise turn
+            angle_difference += 360
 
         # Calculate the distance to move
         distance = math.sqrt(delta_x ** 2 + delta_y ** 2)
@@ -147,8 +143,8 @@ def calculate_turn_angles_and_distances(coordinates):
         angles_to_turn.append(angle_difference)
         distances_to_move.append(distance)
 
-        # Update the current angle to the target angle
-        current_angle = target_angle
+        # Update the current angle to face the target direction
+        current_angle += angle_difference
 
     return angles_to_turn, distances_to_move
 
