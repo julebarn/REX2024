@@ -65,7 +65,7 @@ def rotateDeg(arlo,deg, speed=60):
     lspeed = speed * (1+calibration["bias"])
     rspeed = speed * (1-calibration["bias"])
     clockwise = False
-    if deg<0:
+    if deg>0:
         clockwise = False
         deg = abs(deg)
     else:
@@ -157,4 +157,5 @@ def MovePath(arlo,path):
     print(angles)
     for i in range(len(angles)):
         rotateDeg(arlo,angles[i])
+        time.sleep(0.2)
         goDist(arlo,dists[i])
