@@ -28,7 +28,7 @@ target = TargetLandmark()
 arlo = Robot()
 
 
-Spot360(arlo) 
+#Spot360(arlo) 
 
 
 while not target.isDone():
@@ -37,8 +37,8 @@ while not target.isDone():
     
     
     Spot360(arlo)
-    path = MakePath(EstimatePosition, target.current())
-
+    path = MakePath(EstimatePosition(), target.current())
+    print(f"{path=}")
     finished = MovePath(arlo, path)
     if not finished:
         #TODO if this code is reached 

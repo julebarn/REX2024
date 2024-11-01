@@ -2,7 +2,7 @@ import time
 from itertools import accumulate
 from calibration import calibration
 import math
-from self_local import move_samples, getSamples, setSamples
+from self_local import move_samples, move, sense_landmark
 
 
 def goDist(arlo,dist, speed=60, stopdist = 500):
@@ -45,7 +45,7 @@ def goDist(arlo,dist, speed=60, stopdist = 500):
     time.sleep(0.5)
     
 
-    setSamples(move_samples(getSamples(), 0, dist))
+    move(0, dist)
      
     return True
 
@@ -94,9 +94,8 @@ def rotateDeg(arlo,deg, speed=60):
     
     arlo.stop()
     time.sleep(0.5)
-
+    move(deg,0)
         
-    setSamples(move_samples(getSamples, deg, 0))
 
 
 
@@ -153,7 +152,7 @@ def MovePath(arlo,path):
         rotateDeg(arlo,angles[i])
         time.sleep(0.2)
         finished =  goDist(arlo,dists[i])
-         if not finished:
+        if not finished:
          # TODO a better way to handle this
             return False
 

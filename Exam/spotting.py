@@ -4,7 +4,7 @@ import numpy as np
 from picamera2 import Picamera2, Preview
 import movepath
 from world import isLandmark, getLandmark, addObstacle
-from self_local import sensor_weights, getSamples, setSamples, resample_map
+from self_local import sense_landmark
 
 
 def getCenter(rvec, tvec):
@@ -66,14 +66,12 @@ def spotMarkers():
             print("Center", center)
 
             # this is relative to the camera not the robot
-            rx, ry = center[0], center[1]
+            rx, ry = center[0][0], center[0][1]
             lx, ly = getLandmark(ids[i][0])
             lm = (lx, ly, rx, ry)
 
     
-            setSamples(sensor_weights(getSamples(), lm))
-            setSamples(resample_map(getSamples()))
-
+            sense_landmark(lm)
             continue
         print("obstacle", ids[i][0])
     
@@ -81,7 +79,7 @@ def spotMarkers():
         center = getCenter(rvecs[i], tvecs[i])
         print("Center", center)
 
-        addObstacle(ids[i][0], center[0], center[1])
+        addObstacle(ids[i][0], center[0][0], center[0][1])
 
 
 

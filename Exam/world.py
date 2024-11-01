@@ -6,10 +6,10 @@ from RRT import RRT
 
 
 landmarks = {
-    1: (100, 100),
-    2: (100, 400),
-    3: (500, 100),
-    4: (500, 400)
+    1: (1, 1),
+    2: (1, 4),
+    3: (5, 1),
+    4: (5, 4)
 }
 
 def isLandmark(id):
@@ -30,32 +30,33 @@ def AtTarget(local, target, visit_dist= 40):
     return dist < visit_dist
 
 
-landmarkRadius = 50
-TargetRadius = 20
+landmarkRadius =0.40
+TargetRadius = 0.20
 landmarksObstacles = [
     # (id , x, y)
-    (1, 100, 100),
-    (2, 100, 400),
-    (3, 500, 100),
-    (4, 500, 400)
+    (1, 1, 1),
+    (2, 1, 4),
+    (3, 5, 1),
+    (4, 5, 4)
 ]
 
 obstacles = {}
-obstacleRadius = 20
+obstacleRadius = 0.20
 def addObstacle(id, rx, ry):
-    pos = EstimatePosition()
+    pass
+    #pos = EstimatePosition()
 
     # TODO
-    x = pos[0] + rx
-    y = pos[1] + ry
+    #x = pos[0] + rx
+    #y = pos[1] + ry
     
-    obstacles[id] = (x, y)
+    #obstacles[id] = (x, y)
 
 def MakePath(local, target):
     lx, ly, lt = local
     tx, ty = getLandmark(target)
     # a path is a list of points to visit 
-
+    
     O = []
 
     for (i , ox, oy) in landmarksObstacles:
@@ -66,10 +67,13 @@ def MakePath(local, target):
 
     for (i, ox, oy) in obstacles.items():
         O.append((ox, oy, obstacleRadius))
-
-    rrt = RRT((lx, ly), (tx, ty), 
+    
+    print("RRT")
+    rrt = RRT((lx, ly), (tx+0.2, ty), 
                obstacles= O, 
-               map_size=(600, 500))  
+               map_size=(6, 5),
+               step_size=0.5,
+               max_iter=500)  
     path = rrt.find_path()
 
     return path
