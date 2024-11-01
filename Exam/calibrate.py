@@ -32,16 +32,15 @@ def calibrate_differential(agent=arlo):
     bias = .0
     res  = .1
 
-    agent.go_diff(speed,speed, 1, 1)
-    sleep(2)
-    agent.stop()
 
     for i in range(5):
         #adjust for motor issue
-        arlo.go_diff(speed,speed,0,1)
-        sleep(0.1)
+        agent.go_diff(speed,speed,0,1)
+        sleep(0.175)
+        
+        #start calib
         agent.go_diff(speed * (1+bias),speed * (1-bias), 1, 1)
-        sleep(2)
+        sleep(4)
         agent.stop()
         if input("Drifting left? [y/n] ") == "y":
             bias += res
@@ -99,6 +98,6 @@ def calibrate_rotation(agent=arlo):
     return np.polyfit(*np.array(res).T, 1)
 
 if __name__ == "__main__":
-    #bias       = calibrate_differential(arlo)
-    print(calibrate_speed())
+    print(calibrate_differential(arlo))
+    #print(calibrate_speed())
     #calibrate_rotation()
