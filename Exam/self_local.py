@@ -66,6 +66,10 @@ def init_map(x_range, y_range, n=1000):
 
 def plt_samples(r_samples):
     plt.quiver(*r_samples.T[:2], np.cos(r_samples.T[2]), np.sin(r_samples.T[2]))
+
+    # plot the landmarks at (1,1), (1,5), (4,1), (4,5)
+    plt.scatter([1,1,4,4], [1,5,1,5], c='r') 
+
     plt.show()
 
 n = 1000
