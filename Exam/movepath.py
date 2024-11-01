@@ -5,7 +5,7 @@ import math
 from self_local import move_samples, move, sense_landmark
 
 
-def goDist(arlo,dist, speed=60, stopdist = 500):
+def goDist(arlo,dist, speed=60, stopdist = 200):
     """Move the robot a distance in meters 
     If a object is detected within stopdist meters the robot stops and returns False
     Otherwise it returns True
@@ -14,7 +14,7 @@ def goDist(arlo,dist, speed=60, stopdist = 500):
         arlo (Robot): The robot object
         dist (float): The distance to move in meters
         speed (int, optional): The speed of the robot. Defaults to 60.
-        stopdist (int, optional): The distance to stop if an object is detected. Defaults to 500mm
+        stopdist (int, optional): The distance to stop if an object is detected. Defaults to 200mm
     """
 
     print("Going", dist, "meters")

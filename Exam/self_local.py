@@ -5,7 +5,7 @@ import math
 from scipy.stats import norm, multivariate_normal
 
 def sampler(X, p=None, n=1000):
-    print(f"{np.sum(p)=}")
+    #print(f"{np.sum(p)=}")
     samples = []
     r = np.random.uniform(0, 1/n)
     c = p[0]
@@ -22,18 +22,18 @@ def sampler(X, p=None, n=1000):
 def move_sample(sample, turn, dist):
     """ DO NOT IMPORT THIS FUNCTION 
     """
-    print(f"{sample=}")
+    #print(f"{sample=}")
     x, y, t = sample
     return (x+np.cos(t-turn)*dist, y+np.sin(t-turn)*dist, t-turn)
 
 def move_samples(samples, turn, dist):
-    print("move")
+    #print("move")
     return [move_sample(sample, turn, dist) for sample in samples]
 
 
 
 def sensor_weights(samples, landmark):
-    print("sensor")
+    #print("sensor")
     def sense_weight(sample, landmark):
         # The robot senses a landmark;
         # with absolute position (lx,ly),
@@ -43,7 +43,7 @@ def sensor_weights(samples, landmark):
         dist = math.dist((rx,ry),(0,0))
         sx, sy, _ = move_sample(sample, angle, dist)
         re = norm.pdf(math.dist((lx,ly),(sx,sy)), scale=.2)
-        print(f"{re=}")
+        #print(f"{re=}")
         return re
 
     return np.array([sense_weight(sample, landmark) for sample in samples])
@@ -51,7 +51,7 @@ def sensor_weights(samples, landmark):
 
 def resample_map(samples, w=None, jitter=0, n=1000):
 
-    print("resample")
+    #print("resample")
     p = w/w.sum() if w.all() else np.ones(len(samples)) / len(samples)
     return sampler(samples, p=p)
     #p = w/w.sum() if w else None
