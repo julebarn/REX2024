@@ -3,6 +3,7 @@ import numpy as np
 import numpy.random as rand
 import math
 from scipy.stats import norm, multivariate_normal
+import matplotlib.pyplot as plt
 
 def sampler(X, p=None, n=1000):
     #print(f"{np.sum(p)=}")
@@ -42,7 +43,7 @@ def sensor_weights(samples, landmark):
         angle  = math.atan2(rx,ry)
         dist = math.dist((rx,ry),(0,0))
         sx, sy, _ = move_sample(sample, angle, dist)
-        re = norm.pdf(math.dist((lx,ly),(sx,sy)), scale=.2)
+        re = norm.pdf(math.dist((lx,ly),(sx,sy)), scale=0.08)
         #print(f"{re=}")
         return re
 
@@ -52,26 +53,30 @@ def sensor_weights(samples, landmark):
 def resample_map(samples, w=None, jitter=0, n=1000):
 
     #print("resample")
-    p = w/w.sum() if w.all() else np.ones(len(samples)) / len(samples)
+    p = w/w.sum() 
     return sampler(samples, p=p)
     #p = w/w.sum() if w else None
     #return samples[np.random.choice(len(samples), n, p=p)]
 
 def init_map(x_range, y_range, n=1000):
-    X = rand.uniform(0, x_range,  n)
-    Y = rand.uniform(0, y_range,  n)
+    X = rand.uniform(*x_range,  n)
+    Y = rand.uniform(*y_range,  n)
     T = rand.uniform(0, math.tau, n)
     return np.vstack((X,Y,T)).T
 
-
+def plt_samples(r_samples):
+    plt.quiver(*r_samples.T[:2], np.cos(r_samples.T[2]), np.sin(r_samples.T[2]))
+    plt.show()
 
 n = 1000
-samples = init_map((0,0), (2,2), n)
+samples = init_map((0,5), (0,4), n)
 
 def sense_landmark(landmark):
     global samples
     w = sensor_weights(samples, landmark)
     samples = resample_map(samples, w=w)
+    print(f"{EstimatePosition()=}")
+    plt_samples(samples)
 def move(turn, dist):
     global samples
     samples = move_samples(samples, turn, dist)

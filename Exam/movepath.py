@@ -58,7 +58,7 @@ def checkSonar(arlo, stopdist):
         stopdist (int): The distance to check for
     """
     # print("Checking sonar")
-
+    return False
     return (
         arlo.read_front_ping_sensor() < stopdist or
         # arlo.read_back_ping_sensor() < stopdist or 
@@ -155,4 +155,4 @@ def MovePath(arlo,path):
         if not finished:
          # TODO a better way to handle this
             return False
-
+    return True

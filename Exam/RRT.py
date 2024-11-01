@@ -19,7 +19,7 @@ class RRT:
     This class implements the standard Rapid-exploring Random Trees Algorithm (RRT)  
     """
 
-    def __init__(self, start, goal, map_size, obstacles, step_size=0.5, max_iter=500):
+    def __init__(self, start, goal, map_size, obstacles, step_size=0.8, max_iter=500):
         """
         Initializer:-
             start: tuple of (x,y) coords of current position of Arlo

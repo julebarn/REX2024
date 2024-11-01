@@ -21,7 +21,7 @@ def getLandmark(id):
 
 # visit_dist is in cm 
 # (TODO we should probably standardize the units in the codebase)
-def AtTarget(local, target, visit_dist= 40):
+def AtTarget(local, target, visit_dist= 0.40):
     lx, ly, _ = local
     tx, ty = getLandmark(target)
 
