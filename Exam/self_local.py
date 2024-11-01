@@ -6,6 +6,9 @@ from scipy.stats import norm, multivariate_normal
 import matplotlib.pyplot as plt
 
 def sampler(X, p=None, n=1000):
+    if p.sum() != 1:
+        p = p/p.sum()
+
     #print(f"{np.sum(p)=}")
     samples = []
     r = np.random.uniform(0, 1/n)
@@ -15,7 +18,7 @@ def sampler(X, p=None, n=1000):
         u = r + (m/n)
         while u > c:
             i += 1
-            c += p[i-1]
+            c += p[i]
         samples.append(X[i-1])
     return np.array(samples)
 
@@ -74,6 +77,8 @@ def plt_samples(r_samples):
 
 n = 1000
 samples = init_map((0,5), (0,4), n)
+w = np.ones(n)/n
+samples = resample_map(samples, w=w)
 
 def sense_landmark(landmark):
     global samples
