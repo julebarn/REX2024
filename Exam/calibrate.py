@@ -37,6 +37,9 @@ def calibrate_differential(agent=arlo):
     agent.stop()
 
     for i in range(5):
+        #adjust for motor issue
+        arlo.go_diff(speed,speed,0,1)
+        sleep(0.1)
         agent.go_diff(speed * (1+bias),speed * (1-bias), 1, 1)
         sleep(2)
         agent.stop()
