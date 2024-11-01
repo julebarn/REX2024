@@ -50,27 +50,19 @@ def sensor_weights(samples, landmark):
 
 
 def resample_map(samples, w=None, jitter=0, n=1000):
-<<<<<<< HEAD
+
     print("resample")
     p = w/w.sum() if w.all() else np.ones(len(samples)) / len(samples)
     return sampler(samples, p=p)
     #p = w/w.sum() if w else None
     #return samples[np.random.choice(len(samples), n, p=p)]
-def init_map(loc, var, n=1000):
-    X = np.random.normal(loc, var, (n, len(var)))
-    W = multivariate_normal(loc, var).pdf(X)
-    X = np.hstack((X,np.random.uniform(0, math.tau, n)[np.newaxis].T))
-    return sampler(X, p=W/W.sum())
-=======
-    p = w/w.sum() if w else None
-    return samples[np.random.choice(len(samples), n, p=p)]
 
 def init_map(x_range, y_range, n=1000):
     X = rand.uniform(0, x_range,  n)
     Y = rand.uniform(0, y_range,  n)
     T = rand.uniform(0, math.tau, n)
     return np.vstack((X,Y,T)).T
->>>>>>> b3f7c6f9ada1e19848047c4f0a889fa91b4f882b
+
 
 
 n = 1000
