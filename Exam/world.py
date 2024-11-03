@@ -75,6 +75,7 @@ def MakePath(local, target):
                step_size=0.5,
                max_iter=500)  
     path = rrt.find_path()
+    rrt.plot_final(path)
 
     return path
     
