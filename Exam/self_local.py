@@ -33,6 +33,8 @@ def sensor_weights(samples, landmark):
 
 def resample_map(samples, w=None, jitter=0, n=1000):
     p = w/w.sum()
+    p = np.array([0 if math.isnan(k) else k for k in p])
+    p = p/p.sum()
     smp = np.array(samples)[np.random.choice(len(samples), n, p=p)] 
     smp = smp + np.random.normal(0, 0.1, smp.shape)
     return smp
