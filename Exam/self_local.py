@@ -24,11 +24,15 @@ def sampler(X, p=None, n=1000):
 
 
 def move_sample(sample, turn, dist):
-    """ DO NOT IMPORT THIS FUNCTION 
-    """
-    #print(f"{sample=}")
+    angle_u1, dist_u, angle_u2 = .05, .05, .1
     x, y, t = sample
-    return (x+np.cos(t-turn)*dist, y+np.sin(t-turn)*dist, t-turn)
+    t2 = t + turn + np.random.normal(0, angle_u1) 
+    d2 = np.random.normal(1, dist_u) * dist
+    x2 = x + np.sin(t2)*d2
+    y2 = y + np.cos(t2)*d2
+    t3 = t2 + np.random.normal(0, angle_u2)
+    return (x2,y2,t3)
+
 
 def move_samples(samples, turn, dist):
     #print("move")
@@ -57,9 +61,10 @@ def resample_map(samples, w=None, jitter=0, n=1000):
 
     #print("resample")
     p = w/w.sum() 
-    return sampler(samples, p=p)
+
+    #return sampler(samples, p=p)
     #p = w/w.sum() if w else None
-    #return samples[np.random.choice(len(samples), n, p=p)]
+    return samples[np.random.choice(len(samples), n, p=p)]
 
 def init_map(x_range, y_range, n=1000):
     X = rand.uniform(*x_range,  n)
