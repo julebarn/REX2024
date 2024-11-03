@@ -66,9 +66,9 @@ def spotMarkers():
             print("Center", center)
 
             # this is relative to the camera not the robot
-            rx, ry = center[0][0], center[0][1]
+            rx, rz = center[0][0], center[0][2]
             lx, ly = getLandmark(ids[i][0])
-            lm = (lx, ly, rx, ry)
+            lm = (lx, ly, rx, rz)
 
     
             sense_landmark(lm)
