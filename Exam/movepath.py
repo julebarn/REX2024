@@ -25,14 +25,15 @@ def goDist(arlo,dist, speed=60, stopdist = 200):
 
     lspeed = speed * (1+calibration["bias"])
     rspeed = speed * (1-calibration["bias"])
-    stopTime = time.time() + calibration["speed"]*dist
     
     #adjust for motor issue
     arlo.go_diff(lspeed,rspeed,0,1)
-    time.sleep(0.005)
-    
+    time.sleep(0.4)
+    arlo.stop()
+    time.sleep(0.1)
     arlo.go_diff(lspeed,rspeed, 1, 1)
 
+    stopTime = time.time() + calibration["speed"]*dist
 
     while time.time() < stopTime:
         if checkSonar(arlo, stopdist):
