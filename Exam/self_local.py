@@ -33,7 +33,7 @@ def sensor_weights(samples, landmark):
 
 def resample_map(samples, w=None, jitter=0, n=1000):
     p = w/w.sum()
-    return samples[np.random.choice(len(samples), n, p=p)]
+    return np.array(samples)[np.random.choice(len(samples), n, p=p)]
 
 def init_map(x_range, y_range, n=1000):
     X = rand.uniform(*x_range,  n)
