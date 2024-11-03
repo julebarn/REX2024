@@ -29,7 +29,9 @@ def goDist(arlo,dist, speed=60, stopdist = 200):
 
     #adjust for motor issue
     arlo.go_diff(lspeed,rspeed,0,1)
-    time.sleep(0.05)
+    time.sleep(0.005)
+    stopTime = time.time() + calibration["speed"]*dist
+    
     arlo.go_diff(lspeed,rspeed, 1, 1)
 
 
