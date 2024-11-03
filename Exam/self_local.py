@@ -76,7 +76,7 @@ def plt_samples(r_samples):
     plt.show()
 
 n = 1000000
-samples = init_map((0,5), (0,4), n)
+samples = init_map((0,6), (0,5), n)
 w = np.ones(n)/n
 samples = resample_map(samples, w=w)
 
