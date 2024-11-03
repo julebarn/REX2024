@@ -109,7 +109,7 @@ def rotateDeg(arlo,deg, speed=60):
 
 
 
-def getPath(path, current_angle = 90):
+def getPath(path, current_angle = 0):
     """
     This function takes a list of [x,y] coordinates,
     and returns a list of angles and a list of distances

@@ -59,7 +59,7 @@ def MakePath(local, target):
     
     O = []
 
-    for (i , ox, oy) in landmarksObstacles:
+    for i, (ox, oy) in landmarksObstacles:
         radius = landmarkRadius
         if i == target:
             radius = TargetRadius 

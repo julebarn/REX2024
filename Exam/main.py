@@ -38,6 +38,7 @@ while not target.isDone():
     
     Spot360(arlo)
     est_pose = EstimatePosition()
+    print(f"{est_pose=}")
     path = MakePath(est_pose, target.current())
     print(f"{path=}")
     finished = MovePath(arlo, path, est_pose[2])

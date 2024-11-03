@@ -42,7 +42,7 @@ def init_map(x_range, y_range, n=1000):
     return np.vstack((X,Y,T)).T
 
 def plt_samples(r_samples):
-    r_samples = r_samples + np.random.normal(0, 0.1, r_samples.shape)
+    #r_samples = r_samples + np.random.normal(0, 0.1, r_samples.shape)
     plt.quiver(*r_samples.T[:2], np.cos(r_samples.T[2]), np.sin(r_samples.T[2]))
 
     # plot the landmarks at (1,1), (1,5), (4,1), (4,5)
