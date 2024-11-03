@@ -21,7 +21,7 @@ def getLandmark(id):
 
 # visit_dist is in cm 
 # (TODO we should probably standardize the units in the codebase)
-def AtTarget(local, target, visit_dist= 0.40):
+def AtTarget(local, target, visit_dist= 0.50):
     lx, ly, _ = local
     tx, ty = getLandmark(target)
 
@@ -59,13 +59,13 @@ def MakePath(local, target):
     
     O = []
 
-    for i, (ox, oy) in landmarksObstacles:
+    for i, ox, oy in landmarksObstacles:
         radius = landmarkRadius
         if i == target:
             radius = TargetRadius 
         O.append((ox, oy, radius))
 
-    for (i, ox, oy) in obstacles.items():
+    for i, (ox, oy) in obstacles.items():
         O.append((ox, oy, obstacleRadius))
     
     print("RRT")

@@ -35,11 +35,11 @@ def Spot360(arlo):
     
     num_landmarks = 0
 
-    for i in range(8):
+    for i in range(16):
         num_landmarks += spotMarkers()
         if num_landmarks >= 2:
             break
-        movepath.rotateDeg(arlo, 45)
+        movepath.rotateDeg(arlo, 22.5)
         time.sleep(0.5)
 
 

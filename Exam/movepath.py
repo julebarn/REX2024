@@ -37,7 +37,7 @@ def goDist(arlo,dist, speed=60, stopdist = 200, back=False):
         arlo.go_diff(lspeed,rspeed, 1, 1)
     
     else:
-        arlo.go_diff(lspeed,rspeed, 0, 0
+        arlo.go_diff(lspeed,rspeed, 0, 0)
 
     stopTime = time.time() + calibration["speed"]*dist
 
@@ -66,7 +66,6 @@ def checkSonar(arlo, stopdist):
         stopdist (int): The distance to check for
     """
     # print("Checking sonar")
-    return False
     return (
         arlo.read_front_ping_sensor() < stopdist or
         # arlo.read_back_ping_sensor() < stopdist or 
