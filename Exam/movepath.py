@@ -144,8 +144,8 @@ def getPath(path, current_angle = 90):
 
 
 
-def MovePath(arlo,path):
-    angles,dists = getPath(path)
+def MovePath(arlo, path, current_angle):
+    angles, dists = getPath(path, current_angle)
     print(angles)
     for i in range(len(angles)):
         rotateDeg(arlo,angles[i])
