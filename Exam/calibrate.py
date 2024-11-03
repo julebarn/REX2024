@@ -35,8 +35,8 @@ def calibrate_differential(agent=arlo):
 
     for i in range(5):
         #adjust for motor issue
-        agent.go_diff(speed,speed,0,1)
-        sleep(0.175)
+        #agent.go_diff(speed,speed,0,1)
+        #sleep(0.175)
         
         #start calib
         agent.go_diff(speed * (1+bias),speed * (1-bias), 1, 1)
@@ -63,8 +63,9 @@ def calibrate_speed(agent=arlo):
         
         print(f"{time=}")
         #adjust for motor issue
-        arlo.go_diff(lspeed,rspeed,0,1)
-        sleep(0.1)
+        agent.go_diff(lspeed,rspeed,0,1)
+        sleep(0.4)
+        agent.stop()
         agent.go_diff(lspeed, rspeed, 1, 1)
         sleep(time)
         agent.stop()
@@ -98,6 +99,6 @@ def calibrate_rotation(agent=arlo):
     return np.polyfit(*np.array(res).T, 1)
 
 if __name__ == "__main__":
-    print(calibrate_differential(arlo))
+    #print(calibrate_differential(arlo))
     #print(calibrate_speed())
-    #calibrate_rotation()
+    calibrate_rotation()
