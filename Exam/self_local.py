@@ -5,43 +5,20 @@ import math
 from scipy.stats import norm, multivariate_normal
 import matplotlib.pyplot as plt
 
-def sampler(X, p=None, n=1000):
-    if p.sum() != 1:
-        p = p/p.sum()
-
-    #print(f"{np.sum(p)=}")
-    samples = []
-    r = np.random.uniform(0, 1/n)
-    c = p[0]
-    i = 0
-    for m in range(n-1):
-        u = r + (m/n)
-        while u > c:
-            i += 1
-            c += p[i]
-        samples.append(X[i-1])
-    return np.array(samples)
-
-
 def move_sample(sample, turn, dist):
-    angle_u1, dist_u, angle_u2 = .05, .05, .1
+    angle_u1, dist_u, angle_u2 = .08, .05, .08
     x, y, t = sample
-    t2 = t + turn + np.random.normal(0, angle_u1) 
+    t2 = t - turn + np.random.normal(0, angle_u1)
     d2 = np.random.normal(1, dist_u) * dist
     x2 = x + np.sin(t2)*d2
     y2 = y + np.cos(t2)*d2
     t3 = t2 + np.random.normal(0, angle_u2)
     return (x2,y2,t3)
 
-
 def move_samples(samples, turn, dist):
-    #print("move")
     return [move_sample(sample, turn, dist) for sample in samples]
 
-
-
 def sensor_weights(samples, landmark):
-    #print("sensor")
     def sense_weight(sample, landmark):
         # The robot senses a landmark;
         # with absolute position (lx,ly),
@@ -51,19 +28,11 @@ def sensor_weights(samples, landmark):
         dist = math.dist((rx,ry),(0,0))
         sx, sy, _ = move_sample(sample, angle, dist)
         re = norm.pdf(math.dist((lx,ly),(sx,sy)), scale=0.2)
-        #print(f"{re=}")
         return re
-
     return np.array([sense_weight(sample, landmark) for sample in samples])
 
-
 def resample_map(samples, w=None, jitter=0, n=1000):
-
-    #print("resample")
-    p = w/w.sum() 
-
-    #return sampler(samples, p=p)
-    #p = w/w.sum() if w else None
+    p = w/w.sum()
     return samples[np.random.choice(len(samples), n, p=p)]
 
 def init_map(x_range, y_range, n=1000):
@@ -78,13 +47,10 @@ def plt_samples(r_samples):
 
     # plot the landmarks at (1,1), (1,5), (4,1), (4,5)
     plt.scatter([1,1,4,4], [1,5,1,5], c='r') 
-
     plt.show()
 
-n = 10_000
+n = 20_000
 samples = init_map((0,6), (0,5), n)
-w = np.ones(n)/n
-samples = resample_map(samples, w=w)
 
 def sense_landmark(landmark):
     global samples
@@ -92,8 +58,10 @@ def sense_landmark(landmark):
     samples = resample_map(samples, w=w)
     print(f"{EstimatePosition()=}")
     plt_samples(samples)
+
 def move(turn, dist):
     global samples
     samples = move_samples(samples, turn, dist)
+
 def EstimatePosition():
     return np.array(samples).mean(axis=0)
