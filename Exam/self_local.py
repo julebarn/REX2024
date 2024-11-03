@@ -50,7 +50,7 @@ def sensor_weights(samples, landmark):
         angle  = math.atan2(rx,ry)
         dist = math.dist((rx,ry),(0,0))
         sx, sy, _ = move_sample(sample, angle, dist)
-        re = norm.pdf(math.dist((lx,ly),(sx,sy)), scale=0.08)
+        re = norm.pdf(math.dist((lx,ly),(sx,sy)), scale=0.2)
         #print(f"{re=}")
         return re
 
@@ -80,7 +80,7 @@ def plt_samples(r_samples):
 
     plt.show()
 
-n = 1_000_000
+n = 100_000
 samples = init_map((0,6), (0,5), n)
 w = np.ones(n)/n
 samples = resample_map(samples, w=w)
