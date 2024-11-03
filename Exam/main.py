@@ -1,6 +1,6 @@
 from movepath import * 
 from robot import Robot
-from spotting import spotMarkers
+from spotting import Spot360
 from world import AtTarget, MakePath
 from self_local import EstimatePosition
 
@@ -36,7 +36,7 @@ while not target.isDone():
         target.nextTarget()
     
     
-    spotMarkers()
+    Spot360()
     path = MakePath(EstimatePosition(), target.current())
     print(f"{path=}")
     finished = MovePath(arlo, path)
