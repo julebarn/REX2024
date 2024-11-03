@@ -5,7 +5,7 @@ import math
 from self_local import move_samples, move, sense_landmark
 
 
-def goDist(arlo,dist, speed=60, stopdist = 200):
+def goDist(arlo,dist, speed=60, stopdist = 200, back=False):
     """Move the robot a distance in meters 
     If a object is detected within stopdist meters the robot stops and returns False
     Otherwise it returns True
@@ -26,12 +26,18 @@ def goDist(arlo,dist, speed=60, stopdist = 200):
     lspeed = speed * (1+calibration["bias"])
     rspeed = speed * (1-calibration["bias"])
 
-    #adjust for motor issue
-    arlo.go_diff(lspeed,rspeed,0,1)
-    time.sleep(0.4)
-    stopTime = time.time() + calibration["speed"]*dist
+ 
     
-    arlo.go_diff(lspeed,rspeed, 1, 1)
+    if not back:
+        #adjust for motor issue
+        arlo.go_diff(lspeed,rspeed,0,1)
+        time.sleep(0.4)
+        stopTime = time.time() + calibration["speed"]*dist
+        
+        arlo.go_diff(lspeed,rspeed, 1, 1)
+    
+    else:
+        arlo.go_diff(lspeed,rspeed, 0, 0)
 
     while time.time() < stopTime:
         if checkSonar(arlo, stopdist):
@@ -153,6 +159,5 @@ def MovePath(arlo,path):
         time.sleep(0.2)
         finished =  goDist(arlo,dists[i])
         if not finished:
-         # TODO a better way to handle this
             return False
     return True
