@@ -99,14 +99,13 @@ def rotateDeg(arlo,deg, speed=60):
 
 
 
-def getPath(path):
+def getPath(path, current_angle = 90):
     """
     This function takes a list of [x,y] coordinates,
     and returns a list of angles and a list of distances
     that create a path of how arlo should move
     """
     # Start at 90 degrees (facing the positive y-axis)
-    current_angle = 90
     angles_to_turn = []
     distances_to_move = []
 
@@ -145,8 +144,8 @@ def getPath(path):
 
 
 
-def MovePath(arlo,path):
-    angles,dists = getPath(path)
+def MovePath(arlo, path, current_angle):
+    angles, dists = getPath(path, current_angle)
     print(angles)
     for i in range(len(angles)):
         rotateDeg(arlo,angles[i])

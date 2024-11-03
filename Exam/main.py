@@ -36,11 +36,11 @@ while not target.isDone():
     if AtTarget(EstimatePosition(), target.current()):
         target.nextTarget()
     
-    
     Spot360(arlo)
-    path = MakePath(EstimatePosition(), target.current())
+    est_pose = EstimatePosition()
+    path = MakePath(est_pose, target.current())
     print(f"{path=}")
-    finished = MovePath(arlo, path)
+    finished = MovePath(arlo, path, est_pose[2])
     if not finished:
         #TODO if this code is reached 
         # the code just Kidnapped the robot
