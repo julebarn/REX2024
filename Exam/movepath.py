@@ -74,14 +74,14 @@ def rotateDeg(arlo,deg, speed=60):
     rspeed = speed * (1-calibration["bias"])
     clockwise = False
     if deg>0:
-        clockwise = False
-        deg = abs(deg)
-    else:
         clockwise = True
         deg = abs(deg)
+    else:
+        clockwise = False
+        deg = abs(deg)
     
-    dirLeft  = 1 if clockwise else 0
-    dirRight = 0 if clockwise else 1
+    dirLeft  = 0 if clockwise else 1
+    dirRight = 1 if clockwise else 0
 
     print("Rotating", deg, "degrees", ("clockwise" if clockwise else "countercloskwise"))
     arlo.go_diff(lspeed, rspeed, dirLeft, dirRight)
@@ -91,8 +91,10 @@ def rotateDeg(arlo,deg, speed=60):
     # so we can use a simple time.sleep to wait for the rotation to finish
     # this is a acceptable assumption since the robot is a circle
     # and should not be close to any objects
-
-    time.sleep(deg/calibration["rotation_speed"])
+    if clockwise:
+        time.sleep(deg/calibration["rotation_speed_clock"])
+    else:
+        time.sleep(deg/calibration["rotation_speed_anticlock"])
     
     arlo.stop()
     time.sleep(0.5)
