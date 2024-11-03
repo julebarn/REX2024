@@ -88,6 +88,9 @@ def rotateDeg(arlo,deg, speed=60):
     dirLeft  = 0 if clockwise else 1
     dirRight = 1 if clockwise else 0
 
+    #normalize the degrees to be between 0 and 360
+    deg = deg % 360
+
     print("Rotating", deg, "degrees", ("clockwise" if clockwise else "countercloskwise"))
     arlo.go_diff(lspeed, rspeed, dirLeft, dirRight)
 
