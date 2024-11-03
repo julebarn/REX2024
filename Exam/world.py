@@ -43,14 +43,14 @@ landmarksObstacles = [
 obstacles = {}
 obstacleRadius = 0.20
 def addObstacle(id, rx, ry):
-    pass
-    #pos = EstimatePosition()
-
-    # TODO
-    #x = pos[0] + rx
-    #y = pos[1] + ry
+    pos = EstimatePosition()
     
-    #obstacles[id] = (x, y)
+    x, y, t = pos
+
+    x = x + rx * math.cos(t) - ry * math.sin(t)
+    y = y + rx * math.sin(t) + ry * math.cos(t)
+
+    obstacles[id] = (x, y)
 
 def MakePath(local, target):
     lx, ly, lt = local
