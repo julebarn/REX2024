@@ -1,4 +1,4 @@
-from movepath import * 
+from movepath import MovePath
 from robot import Robot
 from spotting import Spot360
 from world import AtTarget, MakePath
@@ -32,6 +32,7 @@ arlo = Robot()
 
 
 while not target.isDone():
+    print("Current target is: ", target.current())
     if AtTarget(EstimatePosition(), target.current()):
         target.nextTarget()
     

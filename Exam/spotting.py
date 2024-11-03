@@ -5,6 +5,7 @@ from picamera2 import Picamera2, Preview
 import movepath
 from world import isLandmark, getLandmark, addObstacle
 from self_local import sense_landmark
+import time
 
 
 def getCenter(rvec, tvec):
@@ -31,17 +32,15 @@ parameters = cv2.aruco.DetectorParameters_create()
 
 
 def Spot360(arlo):
-    markers = []
+    
+    num_landmarks = 0
 
     for i in range(8):
-        m = spotMarkers()
-        markers = markers + m
+        num_landmarks += spotMarkers()
+        if num_landmarks >= 2:
+            break
         movepath.rotateDeg(arlo, 45)
-	
-    for i in markers:
-        print(i)
-    print(markers)
-    return markers
+        time.sleep(0.5)
 
 
 def spotMarkers():
@@ -58,6 +57,8 @@ def spotMarkers():
     rvecs = rvecs if rvecs is not None else []
     tvecs = tvecs if tvecs is not None else []
 
+    num_landmarks = 0
+
     for i in range(len(ids)):
         if isLandmark(ids[i][0]):
             print("Landmark", ids[i][0])
@@ -70,19 +71,15 @@ def spotMarkers():
             lx, ly = getLandmark(ids[i][0])
             lm = (lx, ly, rx, rz)
 
-    
+            num_landmarks += 1
             sense_landmark(lm)
             continue
         print("obstacle", ids[i][0])
-    
-        
+
         center = getCenter(rvecs[i], tvecs[i])
         print("Center", center)
 
-        addObstacle(ids[i][0], center[0][0], center[0][1])
+        addObstacle(ids[i][0], center[0][0], center[0][2])
 
-
-
-
-    return ids
+    return num_landmarks
 
