@@ -27,13 +27,17 @@ def sensor_weights(samples, landmark):
         angle  = math.atan2(rx,ry)
         dist = math.dist((rx,ry),(0,0))
         sx, sy, _ = move_sample(sample, angle, dist)
-        re = norm.pdf(math.dist((lx,ly),(sx,sy)), scale=0.2)
+        re = norm.pdf(math.dist((lx,ly),(sx,sy)), scale=0.1)
         return re
     return np.array([sense_weight(sample, landmark) for sample in samples])
 
 def resample_map(samples, w=None, jitter=0, n=1000):
     p = w/w.sum()
-    return np.array(samples)[np.random.choice(len(samples), n, p=p)]
+    p = np.array([0 if math.isnan(k) else k for k in p])
+    p = p/p.sum()
+    smp = np.array(samples)[np.random.choice(len(samples), n, p=p)] 
+    smp = smp + np.random.normal(0, 0.1, smp.shape)
+    return smp
 
 def init_map(x_range, y_range, n=1000):
     X = rand.uniform(*x_range,  n)
@@ -42,9 +46,12 @@ def init_map(x_range, y_range, n=1000):
     return np.vstack((X,Y,T)).T
 
 def plt_samples(r_samples):
-    r_samples = r_samples + np.random.normal(0, 0.1, r_samples.shape)
+    #r_samples = r_samples + np.random.normal(0, 0.1, r_samples.shape)
     plt.quiver(*r_samples.T[:2], np.cos(r_samples.T[2]), np.sin(r_samples.T[2]))
 
+    pos = EstimatePosition()
+    x,y,_ = pos
+    plt.scatter(x,y,c="b")
     # plot the landmarks at (1,1), (1,5), (4,1), (4,5)
     plt.scatter([1,1,4,4], [1,5,1,5], c='r') 
     plt.show()

@@ -5,7 +5,7 @@ import math
 from self_local import move_samples, move, sense_landmark
 
 
-def goDist(arlo,dist, speed=60, stopdist = 200):
+def goDist(arlo,dist, speed=60, stopdist = 200, back=False):
     """Move the robot a distance in meters 
     If a object is detected within stopdist meters the robot stops and returns False
     Otherwise it returns True
@@ -26,12 +26,20 @@ def goDist(arlo,dist, speed=60, stopdist = 200):
     lspeed = speed * (1+calibration["bias"])
     rspeed = speed * (1-calibration["bias"])
 
-    #adjust for motor issue
-    arlo.go_diff(lspeed,rspeed,0,1)
-    time.sleep(0.4)
-    stopTime = time.time() + calibration["speed"]*dist
+
+ 
     
-    arlo.go_diff(lspeed,rspeed, 1, 1)
+    if not back:
+        #adjust for motor issue
+        arlo.go_diff(lspeed,rspeed,0,1)
+        time.sleep(0.4)
+        
+        arlo.go_diff(lspeed,rspeed, 1, 1)
+    
+    else:
+        arlo.go_diff(lspeed,rspeed, 0, 0)
+
+    stopTime = time.time() + calibration["speed"]*dist
 
     while time.time() < stopTime:
         if checkSonar(arlo, stopdist):
@@ -58,7 +66,6 @@ def checkSonar(arlo, stopdist):
         stopdist (int): The distance to check for
     """
     # print("Checking sonar")
-    return False
     return (
         arlo.read_front_ping_sensor() < stopdist or
         # arlo.read_back_ping_sensor() < stopdist or 
@@ -72,14 +79,17 @@ def rotateDeg(arlo,deg, speed=60):
     rspeed = speed * (1-calibration["bias"])
     clockwise = False
     if deg>0:
-        clockwise = False
-        deg = abs(deg)
-    else:
         clockwise = True
         deg = abs(deg)
+    else:
+        clockwise = False
+        deg = abs(deg)
     
-    dirLeft  = 1 if clockwise else 0
-    dirRight = 0 if clockwise else 1
+    dirLeft  = 0 if clockwise else 1
+    dirRight = 1 if clockwise else 0
+
+    #normalize the degrees to be between 0 and 360
+    deg = deg % 360
 
     print("Rotating", deg, "degrees", ("clockwise" if clockwise else "countercloskwise"))
     arlo.go_diff(lspeed, rspeed, dirLeft, dirRight)
@@ -89,8 +99,10 @@ def rotateDeg(arlo,deg, speed=60):
     # so we can use a simple time.sleep to wait for the rotation to finish
     # this is a acceptable assumption since the robot is a circle
     # and should not be close to any objects
-
-    time.sleep(deg/calibration["rotation_speed"])
+    if clockwise:
+        time.sleep(deg/calibration["rotation_speed_clock"])
+    else:
+        time.sleep(deg/calibration["rotation_speed_anticlock"])
     
     arlo.stop()
     time.sleep(0.5)
@@ -99,7 +111,7 @@ def rotateDeg(arlo,deg, speed=60):
 
 
 
-def getPath(path, current_angle = 90):
+def getPath(path, current_angle = 0):
     """
     This function takes a list of [x,y] coordinates,
     and returns a list of angles and a list of distances
@@ -152,6 +164,5 @@ def MovePath(arlo, path, current_angle):
         time.sleep(0.2)
         finished =  goDist(arlo,dists[i])
         if not finished:
-         # TODO a better way to handle this
             return False
     return True

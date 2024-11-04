@@ -24,5 +24,7 @@ arlo = Robot()
 
 #MovePath(arlo,path)
 
-goDist(arlo,3)
+#goDist(arlo,0.5)
 
+#rotateDeg(arlo,45,60)
+rotateDeg(arlo,-45,60)

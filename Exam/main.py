@@ -1,9 +1,9 @@
-from movepath import MovePath
+from movepath import MovePath, goDist
 from robot import Robot
 from spotting import Spot360
 from world import AtTarget, MakePath
 from self_local import EstimatePosition
-
+from self_local import move
 
 
 class TargetLandmark:
@@ -38,13 +38,15 @@ while not target.isDone():
     
     Spot360(arlo)
     est_pose = EstimatePosition()
+    print(f"{est_pose=}")
     path = MakePath(est_pose, target.current())
     print(f"{path=}")
     finished = MovePath(arlo, path, est_pose[2])
     if not finished:
-        #TODO if this code is reached 
-        # the code just Kidnapped the robot
         print("Kidnapped by the anti-collision code 😅")
-        break
+        if not AtTarget(EstimatePosition(), target.current()):
+            goDist(arlo, 0.2, back=True)
+           
+                            
         
 
