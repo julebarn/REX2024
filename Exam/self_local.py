@@ -4,6 +4,7 @@ import numpy.random as rand
 import math
 from scipy.stats import norm, multivariate_normal
 import matplotlib.pyplot as plt
+from angles import est_angles
 
 def move_sample(sample, turn, dist):
     angle_u1, dist_u, angle_u2 = .08, .05, .08
@@ -71,4 +72,6 @@ def move(turn, dist):
     samples = move_samples(samples, turn, dist)
 
 def EstimatePosition():
-    return np.array(samples).mean(axis=0)
+    xy = np.array(samples)[:2].mean(axis=0) 
+    t = est_angles(np.array(samples)[2])
+    return (*xy, t)
